@@ -23,7 +23,7 @@ export function Elevator() {
     <nav className="lift" aria-label="Chapters">
       <ol className="lift__list">
         {CHAPTERS.map((c, i) => (
-          <li key={c.id}><button className={i === active ? 'is-active' : ''} onClick={() => scrollToChapter(c.id)} aria-current={i === active ? 'true' : undefined}>{c.nav}</button></li>
+          <li key={c.id}><button className={i === active ? 'is-active' : ''} onClick={() => scrollToChapter(c.id)} aria-current={i === active ? 'true' : undefined}><span>{c.nav}</span><i aria-hidden="true" /></button></li>
         ))}
       </ol>
       <div className="lift__track" aria-hidden="true"><div className="lift__car" ref={car} /></div>

@@ -22,7 +22,7 @@ export function Intro({ ready, reduce }: { ready: boolean; reduce: boolean }) {
   if (gone) return null;
   return (
     <div className="intro" ref={el} aria-hidden="true">
-      <span className="intro__mark"><Mark /></span>
+      <span className="intro__mark"><Mark className="mark__img--lg" /></span>
       <span className="intro__bar"><i ref={bar} /></span>
       <span className="intro__word sign">Going down</span>
     </div>

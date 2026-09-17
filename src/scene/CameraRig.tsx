@@ -32,7 +32,7 @@ export function CameraRig({ mobile, reduce }: { mobile: boolean; reduce: boolean
     while (k < n - 2 && p > fr[k + 1]) k++;
     const seg = fr[k + 1] - fr[k];
     let u = seg > 0 ? clamp01((p - fr[k]) / seg) : 0;
-    u = smoothstep(0.16, 0.84, u);
+    u = smoothstep(0.1, 0.9, u);
     const t = p <= fr[0] ? 0 : (k + u) / (n - 1);
     posCurve.getPoint(t, s.tp);
     lookCurve.getPoint(t, s.tl);
@@ -47,7 +47,7 @@ export function CameraRig({ mobile, reduce }: { mobile: boolean; reduce: boolean
     if (aspect0 < 0.9) s.tp.sub(s.tl).multiplyScalar(1.32).add(s.tl);
 
     if (reduce || debug.snap) { s.pos.copy(s.tp); s.look.copy(s.tl); }
-    else { easing.damp3(s.pos, s.tp, 0.28, dt); easing.damp3(s.look, s.tl, 0.28, dt); }
+    else { easing.damp3(s.pos, s.tp, 0.16, dt); easing.damp3(s.look, s.tl, 0.16, dt); }
 
     const idle = reduce ? 0 : 1;
     const time = st.clock.elapsedTime;

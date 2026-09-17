@@ -7,7 +7,7 @@ import { lerp, smoothstep } from './util';
 /** Colour temperature follows depth: cold at altitude, warm at the floor, neutral outside. */
 export function Atmosphere() {
   const scene = useThree((s) => s.scene);
-  const c = useMemo(() => ({ cold: new Color('#0e131c'), warm: new Color('#1a130d'), neutral: new Color('#0f1219'), out: new Color() }), []);
+  const c = useMemo(() => ({ cold: new Color('#0d1119'), warm: new Color('#1b130d'), neutral: new Color('#0e1219'), out: new Color() }), []);
   useEffect(() => {
     scene.background = c.cold.clone();
     scene.fog = new FogExp2(c.cold.getHex(), 0.03);
@@ -17,7 +17,7 @@ export function Atmosphere() {
     c.out.copy(c.cold).lerp(c.warm, smoothstep(0.42, 1, rig.depth)).lerp(c.neutral, rig.outside);
     if (!(scene.background instanceof Color)) scene.background = c.out.clone(); else scene.background.copy(c.out);
     const fog = scene.fog as FogExp2 | null;
-    if (fog) { fog.color.copy(c.out); fog.density = lerp(0.03, 0.011, rig.outside); }
+    if (fog) { fog.color.copy(c.out); fog.density = lerp(0.026, 0.0095, rig.outside); }
     const hex = '#' + c.out.getHexString();
     if (hex !== last) { last = hex; document.documentElement.style.setProperty('--bg', hex); }
   });

@@ -34,7 +34,9 @@ Company facts, principles, founders, advisors, locations: yes. Anything traceabl
 
 Background is computed from depth (`#0e131c` cold → `#1a130d` warm → `#0f1219` outside) and written to `--bg`. Text `#eef1f5`; secondary at 66% and 42%. One warm accent (`#f3b562`) lives only in the floor's lights.
 
-Type: Host Grotesk (variable, self-hosted) for all speaking text; Barlow Condensed as the signage system (plaques, elevator panel, buttons, floor labels etched in the 3D scene). Both are the only two families.
+Type: Host Grotesk (variable, self-hosted) for all speaking text; Barlow Condensed as the signage system (plaques, elevator panel, buttons, floor labels etched in the 3D scene). Both are the only two families. The mark is the brand file (`public/logo-src.png`), recoloured white for the dark ground.
+
+Interactive colour: ice blue `#9fc2ff` for the elevator car, hover fills and active lines. Amber `#f3a94f` stays in the floor's work lights.
 
 ## Build
 
@@ -42,12 +44,16 @@ Type: Host Grotesk (variable, self-hosted) for all speaking text; Barlow Condens
 - Glass floors: one merged geometry with drei's transmission material (desktop) or a translucent physical material (mobile). Edges and struts as lines.
 - Props are instanced meshes generated procedurally from a seeded PRNG; positions spread evenly around each ring so any camera sees several.
 - Camera rides a centripetal Catmull–Rom spline through per-chapter stations; scroll picks the position with a dwell curve so it holds near each station; maath damping smooths it; the pointer breathes on it. Crossing a floor spikes chromatic aberration.
-- Post: bloom, depth of field focused on the chapter's look point (desktop), chromatic aberration, film grain, vignette.
+- Environment: a gradient sky dome that warms with depth, a survey-grid ground far below, forty ghost buildings in the fog around ours ("a partner sees forty of these"), and light falling down the atrium. A key light from above so the props read as solid.
+- Post: SMAA, bloom kept to the true lights, a light depth of field on the chapter's look point (desktop), chromatic aberration only on floor crossings, a whisper of grain, vignette. Resolution adapts to frame rate.
 - Lenis smooth scroll drives progress; GSAP ScrollTrigger reveals chapter text (masked lines, blur-in) and scrambles the plaque.
-- Sound: synthesised room tone, opt-in, warms and gains a machine pulse with depth.
 - Reduced motion: no smooth scroll, no idle motion, instant chapter text, effects static. Mobile: fewer instances, no transmission, no depth of field, camera steps back on portrait.
 - Debug switches for QA: `?fx=0` (no post), `?glass=0` (plain slabs), `?snap=1` (camera snaps), `?cam=<id>` (hold a station).
 
+## Environment (v2.1)
+
+A gradient sky dome that warms with depth; a survey-grid ground far below; forty ghost buildings in the fog around ours ("a partner sees forty of these"); light falling down the atrium; a key light from above so props read as solid. Anti-aliasing is SMAA; bloom is kept to the true lights; depth of field is light; grain is a whisper; resolution adapts to frame rate. Sound was removed. Interactive colour is ice blue `#9fc2ff`.
+
 ## Non-goals
 
-Client details. Photography. Third-party fonts at runtime. Cursors. Autoplaying sound.
+Client details. Photography. Third-party fonts at runtime. Cursors. Sound.

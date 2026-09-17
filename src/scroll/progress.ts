@@ -26,7 +26,7 @@ export function initScroll(reduce: boolean) {
   window.addEventListener('resize', () => { measure(); update(); });
   window.addEventListener('scroll', update, { passive: true });
   if (!reduce) {
-    lenis = new Lenis({ lerp: 0.075, smoothWheel: true, anchors: false });
+    lenis = new Lenis({ lerp: 0.12, smoothWheel: true, wheelMultiplier: 1.05, anchors: false });
     lenis.on('scroll', () => { update(); ScrollTrigger.update(); });
     gsap.ticker.add((t) => lenis?.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);

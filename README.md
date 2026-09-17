@@ -4,7 +4,7 @@ The company site, built as a descent through a building. Scroll takes you from t
 
 ## Stack
 
-React 19, React Three Fiber 9, drei 10, postprocessing, GSAP 3.15 (ScrollTrigger, SplitText, ScrambleText), Lenis, maath, Vite 8, TypeScript. Fonts are self-hosted (Host Grotesk, Barlow Condensed). No runtime requests leave the page except the Calendly link.
+React 19, React Three Fiber 9, drei 10, postprocessing, GSAP 3.15 (ScrollTrigger, SplitText, ScrambleText), Lenis, maath, Vite 8, TypeScript. Fonts are self-hosted (Host Grotesk, Barlow Condensed) and the mark is the brand file in `public/`. No runtime requests leave the page except the Calendly link.
 
 ## Run
 
@@ -26,8 +26,8 @@ pnpm preview      # serve dist/ on http://127.0.0.1:4173
 | `src/scene/Sheet.tsx` | the delivery note, its highlights, the particle stream, the record |
 | `src/scene/Effects.tsx` | bloom, depth of field, aberration, grain, vignette |
 | `src/scene/Atmosphere.tsx` | background and fog by depth; writes `--bg` for the DOM |
+| `src/scene/Sky.tsx`, `Ground.tsx`, `GhostColumns.tsx`, `LightShafts.tsx` | the environment around the building |
 | `src/ui/` | nav, elevator panel, chapters, loader, footer |
-| `src/audio/drone.ts` | the opt-in room tone |
 | `src/styles/index.css` | tokens and layout |
 | `docs/superpowers/specs/` | the design spec |
 
@@ -42,6 +42,7 @@ node scripts/stations.mjs --mobile              # 390×844
 node scripts/shots.mjs --q "fx=0&glass=0&snap=1" # ride the real scroll through every chapter
 node scripts/shots.mjs --reduce --q "fx=0&glass=0"
 node scripts/shots.mjs --og                     # writes public/og.png from the surface, full effects (slow)
+node scripts/interactions.mjs                   # elevator, descend button, keyboard order, console errors
 ```
 
 Software rendering is slow with glass and post-processing on, so composition checks use the debug switches. Debug switches on the page itself: `?fx=0`, `?glass=0`, `?snap=1`, `?cam=<chapter id>`.

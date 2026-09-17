@@ -28,6 +28,23 @@ function slab(y: number) {
 export function Column({ mobile }: { mobile: boolean }) {
   const merged = useMemo(() => mergeGeometries(FLOORS.map((f) => slab(f.y)))!, []);
   const edges = useMemo(() => new THREE.EdgesGeometry(merged, 25), [merged]);
+  // survey grid on each floor, skipping the atrium
+  const grid = useMemo(() => {
+    const pts: number[] = [];
+    const step = 2;
+    for (const f of FLOORS) {
+      const y = f.y + SLAB.t / 2 + 0.005;
+      for (let x = -SLAB.w / 2 + step; x < SLAB.w / 2; x += step) {
+        if (Math.abs(x) < SLAB.hw / 2) { pts.push(x, y, -SLAB.h / 2 + 0.5, x, y, -SLAB.hh / 2, x, y, SLAB.hh / 2, x, y, SLAB.h / 2 - 0.5); }
+        else pts.push(x, y, -SLAB.h / 2 + 0.5, x, y, SLAB.h / 2 - 0.5);
+      }
+      for (let z = -SLAB.h / 2 + step; z < SLAB.h / 2; z += step) {
+        if (Math.abs(z) < SLAB.hh / 2) { pts.push(-SLAB.w / 2 + 0.5, y, z, -SLAB.hw / 2, y, z, SLAB.hw / 2, y, z, SLAB.w / 2 - 0.5, y, z); }
+        else pts.push(-SLAB.w / 2 + 0.5, y, z, SLAB.w / 2 - 0.5, y, z);
+      }
+    }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3)); return g;
+  }, []);
   const struts = useMemo(() => {
     const pts: number[] = [];
     const top = FLOORS[0].y + 3.2, bottom = FLOORS[FLOORS.length - 1].y - 1.6;
@@ -47,14 +64,17 @@ export function Column({ mobile }: { mobile: boolean }) {
           <meshPhysicalMaterial color="#c8d3ea" transparent opacity={0.22} roughness={0.55} metalness={0} depthWrite={false} />
         ) : (
           <MeshTransmissionMaterial
-            samples={3} resolution={384} transmission={1} roughness={0.34} thickness={0.55} ior={1.38}
-            chromaticAberration={0.05} anisotropicBlur={0.4} distortion={0.06} distortionScale={0.5} temporalDistortion={0.03}
-            color="#dde6f6" attenuationDistance={6} attenuationColor="#c8d6f0"
+            samples={3} resolution={320} transmission={1} roughness={0.22} thickness={0.7} ior={1.42}
+            chromaticAberration={0.04} anisotropicBlur={0.3} distortion={0.05} distortionScale={0.5} temporalDistortion={0.02}
+            color="#cfe0fb" attenuationDistance={5} attenuationColor="#a9c4f5"
           />
         )}
       </mesh>
       <lineSegments geometry={edges}>
-        <lineBasicMaterial color="#b9c6de" transparent opacity={0.3} depthWrite={false} />
+        <lineBasicMaterial color="#b4c6e6" transparent opacity={0.45} depthWrite={false} />
+      </lineSegments>
+      <lineSegments geometry={grid}>
+        <lineBasicMaterial color="#7f93b8" transparent opacity={0.16} depthWrite={false} />
       </lineSegments>
       <lineSegments geometry={struts}>
         <lineBasicMaterial color="#8a98b6" transparent opacity={0.18} depthWrite={false} />

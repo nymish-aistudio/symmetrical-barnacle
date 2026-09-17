@@ -22,7 +22,7 @@ export function Story({ ready, reduce }: { ready: boolean; reduce: boolean }) {
         const tl = gsap.timeline({ paused: true, defaults: { ease: 'expo.out' } });
         if (plaque) tl.fromTo(plaque, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.8 }, 0);
         if (split) tl.fromTo(split.lines, { yPercent: 108 }, { yPercent: 0, duration: 1.15, stagger: 0.085 }, 0.05);
-        if (rest.length) tl.fromTo(rest, { opacity: 0, y: 18, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, stagger: 0.09 }, 0.4);
+        if (rest.length) tl.fromTo(rest, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.0, stagger: 0.09 }, 0.4);
         const text = plaque?.textContent ?? '';
         ScrollTrigger.create({
           trigger: sec, start: 'top 62%', end: 'bottom 38%',
@@ -51,8 +51,8 @@ export function Story({ ready, reduce }: { ready: boolean; reduce: boolean }) {
               {c.id === 'surface' && (
                 <>
                   <div className="ch__actions">
-                    <a className="plate plate--solid" href={CALENDLY} target="_blank" rel="noopener">Book a conversation</a>
-                    <button className="plate" onClick={() => scrollToChapter('fund')}>Descend</button>
+                    <a className="plate plate--solid" href={CALENDLY} target="_blank" rel="noopener"><span>Book a conversation</span></a>
+                    <button className="plate plate--ghost" onClick={() => scrollToChapter('fund')}><span>Descend</span></button>
                   </div>
                   <p className="ch__hint sign">Scroll to descend</p>
                 </>
@@ -80,7 +80,7 @@ export function Story({ ready, reduce }: { ready: boolean; reduce: boolean }) {
               )}
               {c.id === 'start' && (
                 <>
-                  <div className="ch__actions"><a className="plate plate--solid" href={CALENDLY} target="_blank" rel="noopener">Book a conversation</a></div>
+                  <div className="ch__actions"><a className="plate plate--solid" href={CALENDLY} target="_blank" rel="noopener"><span>Book a conversation</span></a></div>
                   <p className="ch__mail">Not ready for a call? Write to <a href="mailto:sharad@aistudio.ae">sharad@aistudio.ae</a>. One sentence about the company is enough.</p>
                 </>
               )}
