@@ -299,9 +299,18 @@ main, .foot { position: relative; z-index: 1; }
 .people__links a:hover { color: var(--fg); border-color: var(--fg); }
 @media (max-width: 720px) { .people { grid-template-columns: 1fr; } }
 
-.notes { margin-top: clamp(32px, 5vh, 56px); display: grid; gap: 14px; max-width: 72ch; }
-.notes p { color: var(--fg-2); font-size: 0.96rem; line-height: 1.6; }
-.notes .sign { display: inline; margin-right: 10px; }
+.notes { margin-top: clamp(34px, 5vh, 58px); display: grid; gap: 2px; max-width: 940px; }
+.note { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 0 24px; padding: 18px 0; border-top: 1px solid var(--rule); }
+.note dt { padding-top: 5px; }
+.note dd { margin: 0; display: grid; gap: 8px; }
+.note p { font-size: 0.98rem; line-height: 1.5; color: var(--fg-2); max-width: 64ch; }
+.note p.who { display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: 4px 20px; align-items: baseline; max-width: none; }
+.note b { font-weight: 550; color: var(--fg); }
+.note span { color: var(--fg-2); }
+@media (max-width: 760px) {
+  .note { grid-template-columns: 1fr; gap: 12px; }
+  .note p.who { grid-template-columns: 1fr; gap: 1px; }
+}
 
 .sec--start .lede { margin-bottom: 36px; }
 .fineprint { margin-top: 20px; color: var(--fg-2); font-size: 0.96rem; max-width: 46ch; }

@@ -101,8 +101,16 @@ Job: pull back. After five chapters, name the three places the same team works. 
 - Founders (two columns):
   - **Sharad Mirani**, Managing Partner, AI and Engineering. Quantitative trading at Tower Research, Optiver and Goldman Sachs. Leads engineering and the systems we put into production. LinkedIn: https://linkedin.com/in/sharad157 · sharad@aistudio.ae
   - **Monish Pathare**, Managing Partner, Business and Operations. Built data-science and automation frameworks from scratch across a venture portfolio. Runs client relationships and delivery. LinkedIn: https://linkedin.com/in/monish-pathare · monish@aistudio.ae
-- Advisors (one line each): Sagar Savla, product and AI advisor, Google DeepMind · Ankush Thakkar, go-to-market advisor, L.E.K. Consulting · Ravi Lakhani, capital and networks, ABRA Ventures
-- Where the team has worked (a quiet inline list, not logos): Goldman Sachs, Optiver, Tower Research, Google DeepMind, L.E.K. Consulting, Lightbox Ventures.
+- A reference block below the founders, set as two labelled rows with a hairline above each. The label sits in its own column so it reads as a label, not as the first words of a sentence.
+
+  `Advisors`
+  | | |
+  |---|---|
+  | Sagar Savla | Product and AI, Google DeepMind |
+  | Ankush Thakkar | Go-to-market, L.E.K. Consulting |
+  | Ravi Lakhani | Capital and networks, ABRA Ventures |
+
+  `Built at` — Goldman Sachs, Optiver, Tower Research, Google DeepMind, L.E.K. Consulting, Lightbox Ventures
 
 Job: credibility without a wall of logos. One sentence of pedigree, then the people. No geography: it is not what a partner is deciding on.
 
