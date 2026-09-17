@@ -20,6 +20,7 @@ Quiet, precise, physical. Engineers who go where the work is and stay until it r
 
 ## Anti-references
 - Marketing pages that list engagements and figures (v1 of this site).
+- A full WebGL scene (v2 of this site): the story survived, the machinery did not.
 - Dark background plus glowing particles as decoration.
 - SaaS card grids, gradient text, glassmorphism as decoration.
 - Editorial magazine serif restraint.

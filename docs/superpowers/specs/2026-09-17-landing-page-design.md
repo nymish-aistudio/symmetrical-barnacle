@@ -1,3 +1,7 @@
+> **Superseded.** This describes the WebGL build, which was stopped on 2026-09-18 as too much.
+> The site that shipped is the 2D editorial build: see `docs/site-brief.md` and `DESIGN.md`.
+> Kept for the reasoning behind the story, which carried over unchanged.
+
 # AiStudio site — design spec (v2, "Go where the work is")
 
 Date: 2026-09-17

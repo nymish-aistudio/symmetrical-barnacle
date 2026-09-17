@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 /**
- * Visual QA: load the site in headless Chromium, ride to every chapter station,
- * and write a screenshot per stop. Uses a locally cached browser; no download.
- *
- *   node scripts/shots.mjs [--url http://127.0.0.1:5173] [--mobile] [--reduce] [--og] [--out shots]
+ * Visual QA. Loads the page in a locally cached headless Chromium and writes a
+ * screenshot per section, plus a full-page strip.
+ *   node scripts/shots.mjs [--url ...] [--mobile] [--reduce] [--out shots] [--full]
  */
 import { chromium } from 'playwright-core';
 import { mkdirSync, existsSync } from 'node:fs';
@@ -16,57 +15,60 @@ const opt = (n, d) => { const i = argv.indexOf(`--${n}`); return i >= 0 && argv[
 const url = opt('url', 'http://127.0.0.1:5173');
 const out = opt('out', 'shots');
 const mobile = flag('mobile'), reduce = flag('reduce'), og = flag('og');
-const q = opt('q', ''); // extra query string, e.g. 'fx=0&glass=0&snap=1' for fast composition runs
 
-const candidates = [
-  process.env.CHROME_PATH,
+const exe = [process.env.CHROME_PATH,
   join(homedir(), 'Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-mac-arm64/chrome-headless-shell'),
   join(homedir(), '.cache/puppeteer/chrome-headless-shell/mac_arm-149.0.7827.22/chrome-headless-shell-mac-arm64/chrome-headless-shell'),
-  '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
-].filter(Boolean);
-const executablePath = candidates.find((p) => existsSync(p));
-if (!executablePath) { console.error('No Chromium found. Set CHROME_PATH.'); process.exit(1); }
+].filter(Boolean).find((p) => existsSync(p));
+if (!exe) { console.error('No Chromium found. Set CHROME_PATH.'); process.exit(1); }
 
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ executablePath, headless: true, args: ['--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
-const context = await browser.newContext({
+const browser = await chromium.launch({ executablePath: exe, headless: true });
+const page = await browser.newPage({
   viewport: og ? { width: 1200, height: 630 } : mobile ? { width: 390, height: 844 } : { width: 1440, height: 900 },
-  deviceScaleFactor: mobile ? 2 : 1,
-  isMobile: mobile, hasTouch: mobile,
+  deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile,
   reducedMotion: reduce ? 'reduce' : 'no-preference',
 });
-const page = await context.newPage();
-page.on('console', (m) => { if (['error', 'warning'].includes(m.type()) && !m.text().includes('GL Driver')) console.log(`[console.${m.type()}]`, m.text().slice(0, 300)); });
 page.on('pageerror', (e) => console.log('[pageerror]', e.message));
-await page.goto(url + (q ? `?${q}` : ''), { waitUntil: 'load' });
-await page.evaluate(() => document.fonts.ready);
-await page.waitForFunction(() => window.__rig && window.__rig.frames > 4 && !document.querySelector('.intro'), null, { timeout: 120000 }).catch(() => console.log('slow start'));
-await page.waitForTimeout(600);
+page.on('console', (m) => { if (m.type() === 'error') console.log('[console.error]', m.text().slice(0, 240)); });
+
+await page.goto(url, { waitUntil: 'networkidle' });
+await page.waitForFunction(() => document.documentElement.classList.contains('is-ready'), null, { timeout: 30000 }).catch(() => console.log('never became ready'));
+await page.waitForTimeout(2200);
 
 if (og) {
-  await page.evaluate(() => { document.querySelector('.nav')?.remove(); document.querySelector('.lift')?.remove(); document.querySelector('.ch__hint')?.remove(); });
-  // let the canvas finish fading in and the arrival dolly settle
-  await page.waitForFunction(() => getComputedStyle(document.querySelector('.gl')).opacity === '1', null, { timeout: 30000 }).catch(() => {});
-  await page.waitForFunction((n) => window.__rig.frames > n, await page.evaluate(() => window.__rig.frames + 24), { timeout: 400000 }).catch(() => {});
+  await page.evaluate(() => { document.querySelector('.nav')?.remove(); document.querySelector('.lift')?.remove(); document.querySelector('.hero__hint')?.remove(); });
   await page.waitForTimeout(500);
   await page.screenshot({ path: 'public/og.png' });
   console.log('wrote public/og.png');
   await browser.close();
   process.exit(0);
 }
-
-const targets = await page.evaluate(() =>
-  Array.from(document.querySelectorAll('section.ch')).map((el) => [el.id, el.getBoundingClientRect().top + window.scrollY + Math.max(0, el.offsetHeight - window.innerHeight) * 0.5]),
-);
-targets.push(['footer', await page.evaluate(() => document.body.scrollHeight)]);
-
+const sfx = `${mobile ? '-m' : ''}${reduce ? '-rm' : ''}`;
+const ids = await page.evaluate(() => Array.from(document.querySelectorAll('section[id]')).map((s) => s.id));
 let i = 0;
-for (const [name, y] of targets) {
-  await page.evaluate((y) => { const l = window.__lenis; if (l) l.scrollTo(y, { immediate: true }); else window.scrollTo(0, y); }, y);
-  await page.waitForFunction((n) => window.__rig && window.__rig.frames > n, await page.evaluate(() => window.__rig.frames + 8), { timeout: 60000 }).catch(() => {});
-  await page.waitForTimeout(400);
-  const file = join(out, `${String(++i).padStart(2, '0')}-${name}${mobile ? '-m' : ''}${reduce ? '-rm' : ''}.png`);
-  await page.screenshot({ path: file });
-  console.log('wrote', file, 'y=', Math.round(y));
+await page.screenshot({ path: join(out, `${String(++i).padStart(2, '0')}-load${sfx}.png`) });
+for (const id of ids) {
+  await page.evaluate((id) => {
+    const el = document.getElementById(id);
+    const top = el.getBoundingClientRect().top + scrollY, h = el.offsetHeight;
+    const y = Math.max(0, h <= innerHeight ? top - (innerHeight - h) / 2 : top - 78);
+    window.scrollTo({ top: y, behavior: 'instant' });
+  }, id);
+  await page.waitForTimeout(1300);
+  await page.screenshot({ path: join(out, `${String(++i).padStart(2, '0')}-${id}${sfx}.png`) });
+  console.log('wrote', id);
+}
+// the sheet, mid-transformation
+await page.evaluate(() => { const f = document.getElementById('sheet-fig'); window.scrollTo({ top: f.getBoundingClientRect().top + scrollY - innerHeight * 0.3, behavior: 'instant' }); });
+await page.waitForTimeout(1300);
+await page.screenshot({ path: join(out, `${String(++i).padStart(2, '0')}-sheet-mid${sfx}.png`) });
+await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }));
+await page.waitForTimeout(1200);
+await page.screenshot({ path: join(out, `${String(++i).padStart(2, '0')}-footer${sfx}.png`) });
+if (flag('full')) {
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: join(out, `00-full${sfx}.png`), fullPage: true });
 }
 await browser.close();

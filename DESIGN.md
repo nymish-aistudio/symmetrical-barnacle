@@ -1,24 +1,34 @@
-# DESIGN.md — the building
+# DESIGN.md
 
-See docs/superpowers/specs/2026-09-17-landing-page-design.md.
+The system behind the site. Rationale and copy: `docs/site-brief.md`.
 
 ## Colour
-Computed from depth and written to `--bg`: cold `#0e131c` at altitude, warm `#1a130d` at the floor, neutral `#0f1219` outside the column. Text `#eef1f5`; `--fg-2` 66%, `--fg-3` 42%. Amber `#f3a94f` only in the floor's work lights. Ice blue `#9fc2ff` for interactive states: the elevator car, hover fills, active lines.
+Two ends, interpolated in OKLCH by scroll depth and written to `--bg`, `--fg`, `--fg-2`, `--accent`:
+
+| | surface | floor |
+|---|---|---|
+| background | `oklch(0.972 0.007 250)` | `oklch(0.185 0.024 260)` |
+| text | `oklch(0.2 0.028 262)` | `oklch(0.95 0.008 250)` |
+| secondary | `oklch(0.47 0.03 258)` | `oklch(0.72 0.015 250)` |
+| accent | `oklch(0.6 0.135 60)` | `oklch(0.78 0.13 72)` |
+
+The accent is amber because that is the colour of light on a floor at night. It appears only on the rail car, the active floor's line, the solid button's hover fill and the field highlights on the sheet. `--fg-3` and `--rule` are derived with `color-mix` from the live tokens, so everything follows the descent for free.
+
+Contrast floor: all small text at or above 4.5:1 at both ends and everywhere between, which is why signage uses `--fg-2` rather than a fainter tint. The large floor numerals use `--fg-4` and clear 3:1.
 
 ## Type
-Host Grotesk (variable, 300–800) for statements and body. Barlow Condensed 500, uppercase, tracked 0.10–0.12em, as the one signage system: plaques, elevator panel, buttons, the labels etched on the floors. Statements clamp(2.1rem, 4.9vw, 4.7rem) at 500, −0.022em, line-height 1.02; the surface statement one step larger.
+Host Grotesk (variable, self-hosted) for everything that speaks. Barlow Condensed for signage, and nothing else on the page is uppercase.
+
+- hero `clamp(2.6rem, 6.4vw, 5.4rem)` / 560 / −0.03em / 0.99, max 13ch
+- statement `clamp(2.05rem, 4.6vw, 4.2rem)` / 500 / −0.022em / 1.04, max 15ch
+- lede `clamp(1.04rem, 1.2vw, 1.19rem)` / 1.55, max 46ch
+- prose 1.05rem / 1.62, max 42ch in the descent
+- signage 0.82rem, tracked 0.13em, uppercase
 
 ## Layout
-Copy in a 620px column on the left over a soft scrim; the 3D subject sits right of centre. Elevator panel fixed right. On phones the copy sits in the bottom third and the camera steps back.
+`--max: 1180px`, `--gut: clamp(20px, 5vw, 88px)`, and a `--col` token so every hairline in the page aligns to the same content width. The descent uses a two-column grid: a numeral gauge, then the text. The rail is fixed to the right edge, clear of that column.
 
-## Environment
-Gradient sky dome with horizon glow (steel blue above, warming below with depth), survey-grid ground far below, a skyline of dark towers with drawn edges and lit windows, light shafts down the atrium, a key light from above and a cool fill from behind. Thin fog.
-
-## Real things
-Every floor is furnished with real low-poly models at 1.5× life size; the fund floor stays abstract (the higher you are, the more abstract the view). Kit pastels are re-toned by material name: chairs slate, wood warm grey, plants deep green. City facades glow faintly from their own colormap.
-
-## Clarity rules
-Clear glass, never frosted. Every prop outlined. No depth of field. Bloom only on true lights. Resolution locked after the loader.
+No cards. No logo wall. No icons. The structural devices are the floor numerals, the shaft, and one hairline per floor.
 
 ## Motion
-Scroll is the story. Camera dwell curve per chapter; chapter text reveals once per approach and reverses on leave; plaques scramble in; floors crossed pulse the aberration. Everything has a reduced-motion form.
+One page-load sequence: the hero's lines rise out of a mask, then the supporting copy. On scroll: the background interpolates, the rail car follows, each statement rises once as it arrives, and the sheet is scrubbed. Buttons fill from the left. Nothing bounces. Every one of these has a reduced-motion form that resolves instantly, and the page is complete without JavaScript running.

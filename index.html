@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>AiStudio — Go where the work is</title>
   <meta name="description" content="AiStudio builds AI for private equity with engineers inside the fund, inside the deal, and inside the companies themselves." />
-  <meta name="theme-color" content="#0e131c" />
+  <meta name="theme-color" content="#f2f4f9" />
   <meta property="og:title" content="AiStudio — Go where the work is" />
-  <meta property="og:description" content="Forward-deployed AI for private equity. Engineers inside the fund, the deal, and the companies themselves." />
+  <meta property="og:description" content="AiStudio builds AI for private equity with engineers inside the fund, inside the deal, and inside the companies themselves." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://www.aistudio.ae/og.png" />
   <meta property="og:image:width" content="1200" />
@@ -19,8 +19,223 @@
   <link rel="stylesheet" href="/src/styles/index.css" />
 </head>
 <body>
-  <div id="root"></div>
-  <noscript><div class="noscript"><h1>AiStudio</h1><p>Go where the work is. Forward-deployed AI for private equity. Write to <a href="mailto:sharad@aistudio.ae">sharad@aistudio.ae</a>.</p></div></noscript>
-  <script type="module" src="/src/main.tsx"></script>
+<a class="skip" href="#surface">Skip to content</a>
+
+<header class="nav" id="nav">
+  <a class="mark" href="#surface" aria-label="AiStudio, back to the top">
+    <img src="/logo-src.png" alt="" width="15" height="25" decoding="async" />
+    <span>AiStudio</span>
+  </a>
+  <div class="nav__actions">
+    <a class="plate plate--ghost" href="#start"><span>Start</span></a>
+    <a class="plate plate--solid" href="https://calendly.com/sharad-aistudio/30min" target="_blank" rel="noopener"><span>Book a conversation</span></a>
+  </div>
+</header>
+
+<!-- the elevator: where you are in the building -->
+<nav class="lift" id="lift" aria-label="Sections">
+  <ol class="lift__list">
+    <li><a href="#surface" data-lift="surface"><span>Surface</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#fund" data-lift="fund"><span>The fund</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#deal" data-lift="deal"><span>The deal</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#company" data-lift="company"><span>The company</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#floor" data-lift="floor"><span>The floor</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#sheet" data-lift="sheet"><span>The sheet</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#build" data-lift="build"><span>How we build</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#altitudes" data-lift="altitudes"><span>Every altitude</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#who" data-lift="who"><span>Who we are</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#start" data-lift="start"><span>Start</span><i aria-hidden="true"></i></a></li>
+  </ol>
+  <div class="lift__track" aria-hidden="true"><span class="lift__car" id="lift-car"></span></div>
+</nav>
+
+<main>
+
+  <!-- ─────────────────────────── surface ─────────────────────────── -->
+  <section class="hero" id="surface" aria-labelledby="h-surface">
+    <div class="wrap hero__in">
+      <p class="sign hero__sign" data-load="1"><b>00</b> Surface</p>
+      <h1 class="statement statement--hero" id="h-surface" data-split>Go where the work is.</h1>
+      <p class="lede" data-load="2">AiStudio builds AI for private equity the only way we know it works: with engineers inside the fund, inside the deal, and inside the companies themselves.</p>
+      <div class="actions" data-load="3">
+        <a class="plate plate--solid" href="https://calendly.com/sharad-aistudio/30min" target="_blank" rel="noopener"><span>Book a conversation</span></a>
+        <a class="plate plate--ghost" href="#fund"><span>Descend</span></a>
+      </div>
+    </div>
+    <p class="hero__hint sign" data-load="4" aria-hidden="true">Scroll to descend</p>
+  </section>
+
+  <!-- ─────────────────────────── the descent ─────────────────────────── -->
+  <div class="descent" id="descent">
+
+    <section class="floor" id="fund" aria-labelledby="h-fund">
+      <div class="wrap floor__in">
+        <p class="floor__gauge" aria-hidden="true">−1</p>
+        <div class="floor__body">
+          <p class="sign floor__name">The fund</p>
+          <h2 class="statement" id="h-fund" data-split>From up here, a company is a row.</h2>
+          <p class="prose">Revenue, margin, headcount, a hold period. A partner sees forty of these. The row is true, and it explains almost nothing about where the time goes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="floor" id="deal" aria-labelledby="h-deal">
+      <div class="wrap floor__in">
+        <p class="floor__gauge" aria-hidden="true">−2</p>
+        <div class="floor__body">
+          <p class="sign floor__name">The deal</p>
+          <h2 class="statement" id="h-deal" data-split>The data room is what a company chooses to show.</h2>
+          <p class="prose">Decks, contracts, audited accounts. We add one thing: read-only access to the systems the company actually runs on, and a working demo on its own data before the committee meets. Diligence you can click.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="floor" id="company" aria-labelledby="h-company">
+      <div class="wrap floor__in">
+        <p class="floor__gauge" aria-hidden="true">−3</p>
+        <div class="floor__body">
+          <p class="sign floor__name">The company</p>
+          <h2 class="statement" id="h-company" data-split>Down here, the business runs on paper.</h2>
+          <p class="prose">Email threads twenty people long. Spreadsheets with six versions. A system from another decade that everyone has learned to work around. Nobody drew this. It grew. And it is where the value is.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="floor" id="floor" aria-labelledby="h-floor">
+      <div class="wrap floor__in">
+        <p class="floor__gauge" aria-hidden="true">−4</p>
+        <div class="floor__body">
+          <p class="sign floor__name">The floor</p>
+          <h2 class="statement" id="h-floor" data-split>This is where we sit.</h2>
+          <p class="prose">Our engineers work from the client’s own desk: the back office, the plant, the fund’s Monday meeting. We read the systems, sit with the people who do the work, and build with them. One workflow at a time, in production, on their data, in weeks.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="floor floor--sheet" id="sheet" aria-labelledby="h-sheet">
+      <div class="wrap floor__in">
+        <p class="floor__gauge" aria-hidden="true">−5</p>
+        <div class="floor__body">
+          <p class="sign floor__name">The sheet</p>
+          <h2 class="statement" id="h-sheet" data-split>One document at a time, the paper becomes a system.</h2>
+          <p class="prose">A delivery note becomes a record. A quote request becomes a priced reply. A thread becomes a case with an owner. A person approves every result until the numbers match. Then we stay until it runs without us.</p>
+        </div>
+      </div>
+
+      <figure class="sheet" id="sheet-fig" aria-hidden="true">
+        <div class="sheet__paper">
+          <div class="sheet__head"><span>Delivery note</span><span>No. 0417</span></div>
+          <div class="sheet__field"><span>Date</span><b>03 / 09</b><i class="sheet__mark"></i></div>
+          <div class="sheet__field"><span>Customer</span><b>—————————</b><i class="sheet__mark"></i></div>
+          <div class="sheet__field"><span>Site</span><b>—————————</b><i class="sheet__mark"></i></div>
+          <div class="sheet__cols"><span>Item</span><span>Qty</span><span>Area</span></div>
+          <div class="sheet__line"><span>Frame 1200 × 800</span><span>12</span><span>11.5 m²</span><i class="sheet__mark"></i></div>
+          <div class="sheet__line"><span>Panel 600 × 400</span><span>40</span><span>9.6 m²</span><i class="sheet__mark"></i></div>
+          <div class="sheet__line"><span>Bracket L 90</span><span>120</span><span>2.2 m²</span><i class="sheet__mark"></i></div>
+          <div class="sheet__line"><span>Cover plate</span><span>8</span><span>1.9 m²</span><i class="sheet__mark"></i></div>
+          <div class="sheet__line"><span>Rail 2400</span><span>6</span><span>3.8 m²</span><i class="sheet__mark"></i></div>
+          <div class="sheet__sign">Signed on arrival. Copy to accounts.</div>
+        </div>
+        <div class="sheet__record">
+          <p class="sign sheet__rec-head">Record 0417</p>
+          <div class="sheet__grid">
+            <b></b><b></b><b></b><b></b>
+            <s></s><s></s><s></s><s></s>
+            <s></s><s></s><s></s><s></s>
+            <s></s><s></s><s></s><s></s>
+            <s></s><s></s><s></s><s></s>
+            <s></s><s></s><s></s><s></s>
+            <s></s><s></s><s></s><s></s>
+            <s></s><s></s><s></s><s></s>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+  </div>
+
+  <!-- ─────────────────────────── how we build ─────────────────────────── -->
+  <section class="sec sec--build" id="build" aria-labelledby="h-build">
+    <div class="wrap">
+      <h2 class="statement" id="h-build" data-split>Ninety percent software. Ten percent AI.</h2>
+      <p class="lede" data-reveal>The model is the easy part. The hard part is the hand-off, the exception, the writeback, and the person who has to trust it. Four rules keep us honest.</p>
+      <ul class="rules">
+        <li data-reveal><b>The human stays in the first version.</b><p>The system proposes and shows its evidence. A person approves. Liability sits with the client, and the design respects that.</p></li>
+        <li data-reveal><b>Cost per record is a design constraint.</b><p>If a model call costs more than the person it helps, it is the wrong architecture. Classical methods do the bulk. Models do the residual.</p></li>
+        <li data-reveal><b>Ground truth before pipelines.</b><p>We rebuild the truth from source documents by hand before we trust a system with a corpus. Where it is not certain, it says so.</p></li>
+        <li data-reveal><b>Your data stays in your jurisdiction.</b><p>EU environments for EU companies. Encrypted deliverables, deletion policies, and access we can account for.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── every altitude ─────────────────────────── -->
+  <section class="sec" id="altitudes" aria-labelledby="h-altitudes">
+    <div class="wrap">
+      <h2 class="statement" id="h-altitudes" data-split>One team, every altitude.</h2>
+      <p class="lede" data-reveal>What we learn on the floor changes how we read a data room. What we build for one company becomes a pattern for the next. The fund sees the same measures across its portfolio, and the deal team sees what a company is really made of before it buys.</p>
+      <ul class="pillars">
+        <li data-reveal><b>Before the deal.</b> Diligence with working software as the output, not a slide on AI potential.</li>
+        <li data-reveal><b>Inside the fund.</b> Internal tools the fund’s own team uses every week, built inside its secure environment.</li>
+        <li data-reveal><b>Inside the companies.</b> Production systems on the shop floor and in the back office, with engineers on site until it runs.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── who we are ─────────────────────────── -->
+  <section class="sec" id="who" aria-labelledby="h-who">
+    <div class="wrap">
+      <h2 class="statement" id="h-who" data-split>We learned this where mistakes cost money.</h2>
+      <p class="lede" data-reveal>AiStudio was founded by engineers from quantitative trading, where software is judged by what it does when the market opens. We are registered in DIFC, Dubai, with an engineering team across Dubai and India, and we deploy on site across Europe.</p>
+
+      <ul class="people">
+        <li data-reveal>
+          <h3>Sharad Mirani</h3>
+          <p class="people__role">Managing Partner, AI and Engineering</p>
+          <p>Quantitative trading at Tower Research, Optiver and Goldman Sachs. Leads engineering and the systems we put into production.</p>
+          <p class="people__links"><a href="https://linkedin.com/in/sharad157" target="_blank" rel="noopener">LinkedIn</a><a href="mailto:sharad@aistudio.ae">sharad@aistudio.ae</a></p>
+        </li>
+        <li data-reveal>
+          <h3>Monish Pathare</h3>
+          <p class="people__role">Managing Partner, Business and Operations</p>
+          <p>Built data-science and automation frameworks from scratch across a venture portfolio. Runs client relationships and delivery.</p>
+          <p class="people__links"><a href="https://linkedin.com/in/monish-pathare" target="_blank" rel="noopener">LinkedIn</a><a href="mailto:monish@aistudio.ae">monish@aistudio.ae</a></p>
+        </li>
+      </ul>
+
+      <div class="notes" data-reveal>
+        <p><span class="sign">Advisors</span> Sagar Savla, product and AI advisor, Google DeepMind. Ankush Thakkar, go-to-market advisor, L.E.K. Consulting. Ravi Lakhani, capital and networks, ABRA Ventures.</p>
+        <p><span class="sign">The team has built at</span> Goldman Sachs, Optiver, Tower Research, Google DeepMind, L.E.K. Consulting, Lightbox Ventures.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── start ─────────────────────────── -->
+  <section class="sec sec--start" id="start" aria-labelledby="h-start">
+    <div class="wrap">
+      <h2 class="statement statement--hero" id="h-start" data-split>Bring us one company.</h2>
+      <p class="lede" data-reveal>Thirty minutes with a partner. Tell us where the time goes. We will tell you honestly whether we can help and what the first eight weeks would look like.</p>
+      <div class="actions" data-reveal>
+        <a class="plate plate--solid" href="https://calendly.com/sharad-aistudio/30min" target="_blank" rel="noopener"><span>Book a conversation</span></a>
+      </div>
+      <p class="fineprint" data-reveal>Not ready for a call? Write to <a href="mailto:sharad@aistudio.ae">sharad@aistudio.ae</a>. One sentence about the company is enough.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__brand"><img src="/logo-src.png" alt="" width="13" height="22" decoding="async" /> AiStudio</p>
+    <p>Registered in DIFC, Dubai. Engineers across Dubai and India, deployed on site across Europe.</p>
+    <p class="foot__links">
+      <a href="https://www.linkedin.com/company/aistudioae/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:sharad@aistudio.ae">sharad@aistudio.ae</a>
+      <a href="mailto:monish@aistudio.ae">monish@aistudio.ae</a>
+      <span>© 2026</span>
+    </p>
+  </div>
+</footer>
+
+<script type="module" src="/src/main.ts"></script>
 </body>
 </html>

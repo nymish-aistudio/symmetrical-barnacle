@@ -1,10 +1,18 @@
 # AiStudio — Go where the work is
 
-The company site, built as a descent through a building. Scroll takes you from the altitude where a company is a row in a spreadsheet, down through the deal and the company to the floor where the work is, to one sheet of paper becoming a system, and back out to see the whole column.
+The company site. One idea: the page is a descent. It starts at the surface, where a company is a row in a spreadsheet, and goes down floor by floor to the place where the work actually happens, then pulls back to show that one team works every altitude.
 
-## Stack
+The story, the content rules and every line of copy live in [`docs/site-brief.md`](docs/site-brief.md). That file is the source of truth; the markup follows it.
 
-React 19, React Three Fiber 9, drei 10, postprocessing, GSAP 3.15 (ScrollTrigger, SplitText, ScrambleText), Lenis, maath, Vite 8, TypeScript. Models are Kenney CC0 kits, lighting is a Poly Haven CC0 HDRI, fonts are self-hosted (Host Grotesk, Barlow Condensed) and the mark is the brand file in `public/`. No runtime requests leave the page except the Calendly link.
+## How the descent is built
+
+There is no 3D. Three things carry it:
+
+- **Colour.** The page background is a pure function of scroll position, interpolated in OKLCH from a cool off-white at the surface to near-black on the floor, and back to light when the page pulls back. Being stateless means a jump, a resize or a refresh can never leave the page half-lit. See `src/lib/descent.ts`.
+- **The shaft.** One hairline runs the height of the descent with the floor numerals set against it and each floor's rule crossing it, so the section reads as a building.
+- **The rail.** A fixed elevator panel on the right: where you are, and a way to go straight there.
+
+The one piece of imagery is the sheet: a delivery note whose fields light up one by one as a record fills beside it. It is scrubbed, so the reader drives it.
 
 ## Run
 
@@ -19,43 +27,33 @@ pnpm preview      # serve dist/ on http://127.0.0.1:4173
 
 | path | what |
 |---|---|
-| `src/story.ts` | every word on the page, the chapter order, camera stations, founders |
-| `src/scene/CameraRig.tsx` | the spline, dwell curve, damping, parallax, floor-crossing pulses |
-| `src/scene/Column.tsx` | the glass floors, edges, struts, etched plaques |
-| `src/scene/kit.tsx` | `Placed` (instanced copies of a model, one draw per part), `Model` (one animatable copy), material re-toning, the asset manifest |
-| `src/scene/layout.ts` | the ring of floor as four bands, and a row helper |
-| `src/scene/floors/` | one file per floor: fund, deal, company, plant |
-| `src/scene/Skyline.tsx`, `District.tsx` | the city around and below, with traffic |
-| `public/models/`, `public/hdr/` | Kenney CC0 kits and a Poly Haven CC0 HDRI (see `public/models/LICENSE.md`) |
-| `src/scene/Sheet.tsx` | the delivery note, its highlights, the particle stream, the record |
-| `src/scene/Effects.tsx` | bloom, depth of field, aberration, grain, vignette |
-| `src/scene/Atmosphere.tsx` | background and fog by depth; writes `--bg` for the DOM |
-| `src/scene/Sky.tsx`, `Ground.tsx`, `GhostColumns.tsx`, `LightShafts.tsx` | the environment around the building |
-| `src/ui/` | nav, elevator panel, chapters, loader, footer |
-| `src/styles/index.css` | tokens and layout |
-| `docs/superpowers/specs/` | the design spec |
+| `index.html` | every word and the whole structure |
+| `src/styles/index.css` | tokens, type, layout; the two ends of the descent |
+| `src/lib/descent.ts` | background colour as a function of scroll |
+| `src/lib/lift.ts` | the rail: active floor and the car |
+| `src/lib/reveal.ts` | the page-load sequence and one reveal per section |
+| `src/lib/sheet.ts` | the document becoming a record |
+| `src/lib/scroll.ts` | smooth scroll and anchor handling |
+| `docs/site-brief.md` | the storyline, content rules and copy |
 
-## Visual QA
+## Checks
 
-Two headless scripts drive a locally cached Chromium (Playwright's or Puppeteer's; set `CHROME_PATH` to use another).
+Both scripts drive a locally cached headless Chromium. Set `CHROME_PATH` to use another binary.
 
 ```bash
-node scripts/stations.mjs                       # hold the camera at each station, plain materials, no post
-node scripts/stations.mjs --ids fund,sheet      # a subset
-node scripts/stations.mjs --mobile              # 390×844
-node scripts/stations.mjs --full --size 960x600 # post-processing on; smaller frame so software rendering keeps up
-node scripts/shots.mjs --q "fx=0&glass=0&snap=1" # ride the real scroll through every chapter
-node scripts/shots.mjs --reduce --q "fx=0&glass=0"
-node scripts/shots.mjs --og                     # writes public/og.png from the surface, full effects (slow)
-node scripts/interactions.mjs                   # elevator, descend button, keyboard order, console errors
+node scripts/shots.mjs                  # a screenshot per section, desktop
+node scripts/shots.mjs --mobile         # 390×844
+node scripts/shots.mjs --reduce         # prefers-reduced-motion
+node scripts/shots.mjs --og             # rewrites public/og.png from the hero
+node scripts/audit.mjs                  # anchors, rail, focus order, contrast, console
 ```
 
-Software rendering is slow with glass and post-processing on, so composition checks use the debug switches. Debug switches on the page itself: `?fx=0` (no post), `?env=0` (no HDRI), `?glass=0`, `?snap=1`, `?cam=<chapter id>`.
+`audit.mjs` is the gate before shipping. It must report no console errors, every anchor landing on its own section with the right rail entry lit, the descent reaching full dark on the floor and full light at the close, and every text sample above 4.5:1 (3:1 for the large floor numerals).
 
 ## Content rules
 
-Public copy describes the kind of work and the company's own principles, people and places. Nothing traceable to a client appears on the site.
+Nothing traceable to a client: no figures, sectors, countries, timelines or engagement details. Company facts, founders, advisors and locations are fine. One conversion, the Calendly link, with sharad@aistudio.ae as the fallback.
 
 ## Deploy
 
-Static output in `dist/`. Any static host. The Open Graph image URL in `index.html` assumes `https://www.aistudio.ae`; change it if the domain differs.
+Static output in `dist/`, about 55 kB gzipped plus two self-hosted fonts. Any static host. The Open Graph image URL in `index.html` assumes `https://www.aistudio.ae`; change it if the domain differs.
