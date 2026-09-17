@@ -1,75 +1,53 @@
-# AiStudio landing page — design spec
+# AiStudio site — design spec (v2, "Go where the work is")
 
 Date: 2026-09-17
-Status: approved for build (autonomous session; user asked for a "once in a lifetime" landing page with a proper repo, using the content from the previous draft)
+Status: built. Supersedes v1 (the cyanotype), which was rejected for publishing engagement specifics and for reading as a marketing page rather than a story.
 
 ## Brief
 
-AiStudio embeds engineers inside private-equity funds, their deals and their portfolio companies, and ships production AI across the hold period. The previous draft (dark background, amber accent, Bricolage Grotesque, a Three.js constellation hero) was rejected as uninspiring. The new page must keep every fact and figure from that draft, describe clients only by sector and country, and be technically extraordinary without reading as a crypto or SaaS template.
+A single-page site for AiStudio, written in the founders' voice, that tells one story: the work of a company happens far below the altitude at which it is bought, and AiStudio goes down there. No client details of any kind. Reference for ambition: igloo.inc (Awwwards Site of the Year 2024): one hard idea, scroll as the sequencing device, a single signature object, sound and transitions as texture.
 
-Audience: partners and operating partners at mid-market PE funds, and the CEOs of their portfolio companies. Time-poor, allergic to hype, persuaded by specificity.
+## The one idea: the descent
 
-Physical scene: a partner opens the link on a MacBook in a glass-walled office at noon, then again on a phone in the back of a taxi. Daylight, not a dark room. The page has to hold up as a document as much as a show.
+Scroll is a descent through a building. Each chapter is a floor.
 
-## Concept: the cyanotype
+| station | plaque | what you see | what is said |
+|---|---|---|---|
+| 00 | Surface | looking down the atrium from above | Go where the work is. |
+| −1 | The fund | a spreadsheet made of light; companies stand up out of it as towers | From up here, a company is a row. |
+| −2 | The deal | the data room: piles of documents tethered to a dark silhouette with lit windows | The data room is what a company chooses to show. |
+| −3 | The company | desks, screens, and email travelling between them | Down here, the business runs on paper. |
+| −4 | The floor | machines, carts, orders hanging on paper, amber work lights, sparks | This is where we sit. |
+| −5 | The sheet | one delivery note; its fields light up and stream into a record | One document at a time, the paper becomes a system. |
+| — | How we build | the sheet and the record together | Ninety percent software. Ten percent AI. Four rules. |
+| ↑ | Every altitude | the camera leaves the atrium; the whole column, threads of light between floors | One team, every altitude. |
+| — | Who we are | the column from the other side | We learned this where mistakes cost money. |
+| — | Start | the column from above and in front | Bring us one company. |
 
-Engineering drawings were reproduced as cyanotypes: white lines on Prussian blue. AiStudio's work is literally documents (delivery notes, CAD drawings, emails, ERP exports) turned into structure. The page is built as one long print.
+Colour temperature follows depth: cold at altitude, warm at the floor, neutral outside. The elevator panel on the right is the navigation.
 
-- The first half of the page is the **print**: white type and a white point-cloud on cyanotype blue.
-- One scroll-driven moment **develops** the print into **paper**: blue ink on off-white. Method, principles, team and the close live on paper.
-- The point-cloud is the one memorable object. It holds exactly 44,471 points, one per email in the flagship engagement, and re-forms into the shape of whatever the reader is looking at.
+## Content rules
 
-Colour strategy: committed two-tone. Cyanotype blue and paper. No third accent; emphasis comes from weight and width.
-
-## Approaches considered
-
-1. **Hold-period timeline as the page spine.** Clean narrative, but reads as an infographic and repeats every PE deck.
-2. **Point-cloud substrate that re-forms per section (chosen).** One object, many formations, each formation is the actual shape of a real engagement (inbox → ledger, heat map, ring, plate, bins). Specific to the work; technically ambitious; degrades to a static sheet.
-3. **Kinetic typographic dossier.** Variable-font choreography only. Falls into the editorial-typographic lane and carries no imagery.
+Company facts, principles, founders, advisors, locations: yes. Anything traceable to a client (figures, sectors, countries, timelines): no. The delivery note is fictional and archetypal.
 
 ## Tokens
 
-Colour (OKLCH, sRGB fallback):
+Background is computed from depth (`#0e131c` cold → `#1a130d` warm → `#0f1219` outside) and written to `--bg`. Text `#eef1f5`; secondary at 66% and 42%. One warm accent (`#f3b562`) lives only in the floor's lights.
 
-| token | value | hex |
-|---|---|---|
-| print | oklch(0.38 0.15 262) | #0f3a90 |
-| print-deep | oklch(0.30 0.13 262) | #03266d |
-| print-ink | oklch(0.97 0.01 240) | #eff6fb |
-| print-ink-2 | oklch(0.86 0.05 240) | #b4d6ef |
-| paper | oklch(0.975 0.006 250) | #f4f7fb |
-| paper-2 | oklch(0.94 0.01 250) | #e6ecf2 |
-| ink | oklch(0.22 0.04 262) | #101a2d |
-| ink-2 | oklch(0.42 0.04 262) | #414d63 |
-| blue | oklch(0.42 0.16 262) | #1545a2 |
+Type: Host Grotesk (variable, self-hosted) for all speaking text; Barlow Condensed as the signage system (plaques, elevator panel, buttons, floor labels etched in the 3D scene). Both are the only two families.
 
-Semantic vars (`--bg --fg --fg-2 --rule --btn-bg --btn-fg`) swap between the two sets; the swap is animated by GSAP over the development zone.
+## Build
 
-Type: **Archivo** variable (wdth 62–125, wght 100–900) for everything that speaks; **Azeret Mono** only inside document artifacts (ledger rows, title block, dimension labels), where monospace is what those documents look like in reality. Scale ratio 1.333. Display max 5.6rem. Letter-spacing floor -0.03em.
-
-Layout: 12-column fluid grid, max 1320px, gutter clamp(20px, 5vw, 72px). Text left-aligned. Substrate sits right of centre on desktop, centred and dimmed under text on mobile. One structural device: a drawing-frame border with corner marks around the hero and a title block in its bottom-right corner.
-
-## Page
-
-1. **Hero (pinned, 260vh of scroll).** Headline "Forward-deployed AI for private equity." in expanded Archivo. Substrate in inbox scatter (four clusters, four shared inboxes). On scroll the headline compresses (wdth axis) and lifts away, the scatter snaps into a ledger sheet, and a caption counts 44,471 → 1 ledger. Title block carries the engagement metadata.
-2. **Where we work (pinned, 320vh).** "Most AI vendors sell to one buyer. A fund has three." Three panels cross-fade while the substrate re-forms: heat map (diligence), ring (fund + portfolio), plate with holes (shop floor).
-3. **Work (flow).** A ledger, not cards: seven rows with sector, country, status, the figure and one line; each expands for detail. Scrolling a row into view re-forms the substrate to that engagement's shape. Two earlier case studies follow as a short table with links. One "also in flight" paragraph.
-4. **Development zone (100vh).** Theme vars tween from print to paper; the canvas fades out.
-5. **Method.** Identify · Build · Run · Measure as a real four-step sequence (numbered, justified) on a path that draws on scroll, each with its real example.
-6. **How we think.** "Ninety percent software. Ten percent AI." Four principles as large statements; the one in view sits at full weight and width.
-7. **Team.** Two founders as engraved title-block plates, the forward-deployed paragraph, pedigree list, three advisors.
-8. **Close.** "Bring us one company. We'll bring back a map." Book-a-conversation button and email. Substrate returns faintly as the ring in blue on paper.
-9. **Footer.**
-
-## Motion and tech
-
-- Vite + TypeScript, no framework.
-- Three.js `Points` with a custom GLSL material. Formations are stored as RGBA float DataTextures (xyz + a per-point value), morph = mix of two textures with per-point stagger and a curl swirl at mid-transition. Mid-morph retargets interpolate on the CPU into a scratch texture so a scrub reversal never pops.
-- GSAP 3.15 with ScrollTrigger, SplitText, DrawSVGPlugin. Lenis for smooth scroll, driven by the GSAP ticker.
-- Reduced motion: no Lenis, no swirl, no idle drift, formations set instantly, theme set instantly, all reveals resolve to their final state.
-- Mobile: draw range cut to ~15k points, DPR capped at 1.5, pointer parallax off.
-- Canvas is `aria-hidden`; content is complete without it.
+- React 19 + React Three Fiber 9 + drei 10, Vite 8, TypeScript.
+- Glass floors: one merged geometry with drei's transmission material (desktop) or a translucent physical material (mobile). Edges and struts as lines.
+- Props are instanced meshes generated procedurally from a seeded PRNG; positions spread evenly around each ring so any camera sees several.
+- Camera rides a centripetal Catmull–Rom spline through per-chapter stations; scroll picks the position with a dwell curve so it holds near each station; maath damping smooths it; the pointer breathes on it. Crossing a floor spikes chromatic aberration.
+- Post: bloom, depth of field focused on the chapter's look point (desktop), chromatic aberration, film grain, vignette.
+- Lenis smooth scroll drives progress; GSAP ScrollTrigger reveals chapter text (masked lines, blur-in) and scrambles the plaque.
+- Sound: synthesised room tone, opt-in, warms and gains a machine pulse with depth.
+- Reduced motion: no smooth scroll, no idle motion, instant chapter text, effects static. Mobile: fewer instances, no transmission, no depth of field, camera steps back on portrait.
+- Debug switches for QA: `?fx=0` (no post), `?glass=0` (plain slabs), `?snap=1` (camera snaps), `?cam=<id>` (hold a station).
 
 ## Non-goals
 
-Naming clients. Photography. A third accent colour. Custom cursors. Sound.
+Client details. Photography. Third-party fonts at runtime. Cursors. Autoplaying sound.

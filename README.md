@@ -1,14 +1,10 @@
-# AiStudio — landing page
+# AiStudio — Go where the work is
 
-Forward-deployed AI for private equity. A single-page site built as a cyanotype: the first half is white type and a 44,471-point substrate on Prussian blue; one scroll-driven moment develops it into blue ink on paper.
+The company site, built as a descent through a building. Scroll takes you from the altitude where a company is a row in a spreadsheet, down through the deal and the company to the floor where the work is, to one sheet of paper becoming a system, and back out to see the whole column.
 
 ## Stack
 
-- Vite 8 + TypeScript, no framework
-- Three.js: one `Points` object with a custom GLSL material. Formations live in RGBA float textures; the GPU mixes two of them with a per-point stagger and a curl swirl. Mid-morph retargets are snapshotted on the CPU so nothing pops.
-- GSAP 3.15 with ScrollTrigger, SplitText and DrawSVGPlugin
-- Lenis smooth scroll, driven by the GSAP ticker
-- Archivo (variable width and weight) and Azeret Mono from Google Fonts
+React 19, React Three Fiber 9, drei 10, postprocessing, GSAP 3.15 (ScrollTrigger, SplitText, ScrambleText), Lenis, maath, Vite 8, TypeScript. Fonts are self-hosted (Host Grotesk, Barlow Condensed). No runtime requests leave the page except the Calendly link.
 
 ## Run
 
@@ -19,36 +15,41 @@ pnpm build        # typecheck + production build to dist/
 pnpm preview      # serve dist/ on http://127.0.0.1:4173
 ```
 
-## Visual QA
-
-`scripts/shots.mjs` drives a locally cached headless Chromium through the page and writes a screenshot per scroll state.
-
-```bash
-node scripts/shots.mjs                 # desktop, ./shots
-node scripts/shots.mjs --mobile        # 390×844, ./shots-m
-node scripts/shots.mjs --reduce        # prefers-reduced-motion, ./shots-rm
-node scripts/shots.mjs --og            # writes public/og.png from the hero
-```
-
-It looks for a Chromium in the Playwright or Puppeteer cache, then Brave. Set `CHROME_PATH` to point at another binary.
-
-## Layout of the code
+## Where things live
 
 | path | what |
 |---|---|
-| `index.html` | all copy and structure |
-| `src/styles/index.css` | tokens, type, layout, sections; the two-tone theme as semantic vars |
-| `src/gl/formations.ts` | the six shapes: inbox, ledger, heat, ring, plate, bins |
-| `src/gl/substrate.ts` | renderer, morph controller, camera poses, opacity owner |
-| `src/gl/shaders/` | vertex and fragment shaders |
-| `src/motion/` | one module per section: hero, altitudes, work, develop, method, principles, close |
+| `src/story.ts` | every word on the page, the chapter order, camera stations, founders |
+| `src/scene/CameraRig.tsx` | the spline, dwell curve, damping, parallax, floor-crossing pulses |
+| `src/scene/Column.tsx` | the glass floors, edges, struts, etched plaques |
+| `src/scene/floors/` | one file per floor: fund, deal, company, plant |
+| `src/scene/Sheet.tsx` | the delivery note, its highlights, the particle stream, the record |
+| `src/scene/Effects.tsx` | bloom, depth of field, aberration, grain, vignette |
+| `src/scene/Atmosphere.tsx` | background and fog by depth; writes `--bg` for the DOM |
+| `src/ui/` | nav, elevator panel, chapters, loader, footer |
+| `src/audio/drone.ts` | the opt-in room tone |
+| `src/styles/index.css` | tokens and layout |
 | `docs/superpowers/specs/` | the design spec |
-| `PRODUCT.md`, `DESIGN.md` | product context and the design system, for `/impeccable` |
+
+## Visual QA
+
+Two headless scripts drive a locally cached Chromium (Playwright's or Puppeteer's; set `CHROME_PATH` to use another).
+
+```bash
+node scripts/stations.mjs                       # hold the camera at each station, plain materials, no post
+node scripts/stations.mjs --ids fund,sheet      # a subset
+node scripts/stations.mjs --mobile              # 390×844
+node scripts/shots.mjs --q "fx=0&glass=0&snap=1" # ride the real scroll through every chapter
+node scripts/shots.mjs --reduce --q "fx=0&glass=0"
+node scripts/shots.mjs --og                     # writes public/og.png from the surface, full effects (slow)
+```
+
+Software rendering is slow with glass and post-processing on, so composition checks use the debug switches. Debug switches on the page itself: `?fx=0`, `?glass=0`, `?snap=1`, `?cam=<chapter id>`.
 
 ## Content rules
 
-Every figure comes from a real engagement. Clients are described by sector and country only. The one conversion is the Calendly link; the fallback is sharad@aistudio.ae.
+Public copy describes the kind of work and the company's own principles, people and places. Nothing traceable to a client appears on the site.
 
 ## Deploy
 
-Static output in `dist/`. Any static host works (Vercel, Netlify, Cloudflare Pages, S3). The Open Graph image URL in `index.html` assumes the site is served from `https://www.aistudio.ae`; change it if the domain differs.
+Static output in `dist/`. Any static host. The Open Graph image URL in `index.html` assumes `https://www.aistudio.ae`; change it if the domain differs.

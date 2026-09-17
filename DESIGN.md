@@ -1,20 +1,15 @@
-# DESIGN.md — the cyanotype system
+# DESIGN.md — the building
 
-See docs/superpowers/specs/2026-09-17-landing-page-design.md for the rationale.
+See docs/superpowers/specs/2026-09-17-landing-page-design.md.
 
 ## Colour
-Two-tone. `print` #0f3a90 (cyanotype blue) with `print-ink` #eff6fb; `paper` #f4f7fb with `ink` #101a2d. Semantic vars `--bg --fg --fg-2 --rule --btn-bg --btn-fg` swap between the sets; the swap animates on scroll over the development zone. No third accent.
+Computed from depth and written to `--bg`: cold `#0e131c` at altitude, warm `#1a130d` at the floor, neutral `#0f1219` outside the column. Text `#eef1f5`; `--fg-2` 66%, `--fg-3` 42%. Amber `#f3b562` only in the floor's work lights.
 
 ## Type
-Archivo (variable; wdth 62–125, wght 100–900) for all speaking text. Azeret Mono only inside document artifacts. Scale 1.333: 0.8, 1, 1.333, 1.777, 2.369, 3.157, 4.209, 5.61 rem. Display letter-spacing -0.03em, line-height 0.96. Body 1.0625rem / 1.6, max 68ch. Light-on-dark body line-height +0.05.
+Host Grotesk (variable, 300–800) for statements and body. Barlow Condensed 500, uppercase, tracked 0.10–0.12em, as the one signage system: plaques, elevator panel, buttons, the labels etched on the floors. Statements clamp(2.1rem, 4.9vw, 4.7rem) at 500, −0.022em, line-height 1.02; the surface statement one step larger.
 
 ## Layout
-`--gut: clamp(20px, 5vw, 72px)`, `--max: 1320px`. Grid 12 columns. Left-aligned. Sections separated by rhythm, not rules: large gaps between ideas, tight gaps within.
-
-## Structural devices (the only ones)
-- Drawing frame: 1px frame with 12px corner marks around the hero viewport.
-- Title block: a mono metadata block in the bottom-right of the frame.
-- Ledger rows: full-width rows with a rule between, never cards.
+Copy in a 620px column on the left over a soft scrim; the 3D subject sits right of centre. Elevator panel fixed right. On phones the copy sits in the bottom third and the camera steps back.
 
 ## Motion
-One page-load sequence (headline in, scatter breathes). Scroll-driven: hero morph, altitude morphs, development, method path draw, principle weight. Easing `expo.out` / `power3.out`; no bounce. Everything has a reduced-motion alternative.
+Scroll is the story. Camera dwell curve per chapter; chapter text reveals once per approach and reverses on leave; plaques scramble in; floors crossed pulse the aberration. Everything has a reduced-motion form.

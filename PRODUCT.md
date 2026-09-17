@@ -1,4 +1,4 @@
-# AiStudio — landing page
+# AiStudio — company site
 
 ## Register
 brand
@@ -7,26 +7,25 @@ brand
 web
 
 ## What it is
-A single-page marketing site for AiStudio, a forward-deployed AI engineering firm that embeds engineers inside private-equity funds, their deals and their portfolio companies and ships production systems across the hold period.
+A single-page narrative site for AiStudio, a forward-deployed AI engineering firm working with private-equity funds, their deals and their portfolio companies.
 
 ## Who it is for
-Partners and operating partners at mid-market PE funds (London, DACH, Italy) and the CEOs and COOs of their portfolio companies. Secondary: candidate engineers deciding whether to join.
+Partners and operating partners at mid-market PE funds, and the leadership of their portfolio companies. Secondary: engineers deciding whether to join.
 
 ## What it must do
-Get a sceptical partner to book a thirty-minute conversation, by showing real engagements with real figures rather than claims.
+Make a sceptical partner feel the difference between AI sold as slides and AI built on the floor, and book a thirty-minute conversation.
 
 ## Brand personality
-Shop-floor precise. Ledger-honest. Quietly forceful. Engineers who have shipped where mistakes cost money.
+Quiet, precise, physical. Engineers who go where the work is and stay until it runs.
 
 ## Anti-references
-- Dark background with glowing amber particles and a constellation hero (the rejected draft).
-- SaaS card grids, gradient text, glassmorphism.
-- Navy-and-gold "trusted by institutions" fintech.
+- Marketing pages that list engagements and figures (v1 of this site).
+- Dark background plus glowing particles as decoration.
+- SaaS card grids, gradient text, glassmorphism as decoration.
 - Editorial magazine serif restraint.
-- Crypto/AI-startup neon.
 
 ## Proof and conversion
-Every figure on the page is from a real engagement; clients are described by sector and country only. One conversion: the Calendly link (https://calendly.com/sharad-aistudio/30min), with sharad@aistudio.ae as the fallback.
+Proof is the world itself: the building, the paper, the record. No client details. One conversion: https://calendly.com/sharad-aistudio/30min, with sharad@aistudio.ae as the fallback.
 
 ## Accessibility
-Body contrast ≥ 4.5:1 in both halves. Reduced motion honoured throughout. Content complete without WebGL.
+All copy is real DOM text; the canvas is decorative. Reduced motion honoured. Sound is opt-in.
