@@ -3,18 +3,14 @@
 The system behind the site. Rationale and copy: `docs/site-brief.md`.
 
 ## Colour
-Two ends, interpolated in OKLCH by scroll depth and written to `--bg`, `--fg`, `--fg-2`, `--accent`:
+One palette, fixed. `--bg` `oklch(0.962 0.009 250)`, `--fg` `oklch(0.2 0.028 262)`, `--fg-2` `oklch(0.44 0.028 258)`, accent `oklch(0.57 0.135 58)`, a deep ochre. `--fg-3`, `--fg-4` and the rules are derived with `color-mix`.
 
-| | surface | floor |
-|---|---|---|
-| background | `oklch(0.972 0.007 250)` | `oklch(0.185 0.024 260)` |
-| text | `oklch(0.2 0.028 262)` | `oklch(0.95 0.008 250)` |
-| secondary | `oklch(0.47 0.03 258)` | `oklch(0.72 0.015 250)` |
-| accent | `oklch(0.6 0.135 60)` | `oklch(0.78 0.13 72)` |
+The accent appears in four places only: the rail marker, the active chapter's line, the solid button's hover fill, and the field highlights on the sheet.
 
-The accent is amber because that is the colour of light on a floor at night. It appears only on the rail car, the active floor's line, the solid button's hover fill and the field highlights on the sheet. `--fg-3` and `--rule` are derived with `color-mix` from the live tokens, so everything follows the descent for free.
+Contrast floor, measured against both the flat background and the darkest tone the backdrop can paint: small text at or above 5.4:1, the large chapter numerals above 3:1. `scripts/audit.mjs` checks this.
 
-Contrast floor: all small text at or above 4.5:1 at both ends and everywhere between, which is why signage uses `--fg-2` rather than a fainter tint. The large floor numerals use `--fg-4` and clear 3:1.
+## Backdrop
+A mesh gradient with grain from `@paper-design/shaders`, mounted full-viewport behind the page, five cool blue-grey stops, moving at speed 0.12. Capped at a 1920×1080 pixel budget and pixel ratio 1, because it is a soft gradient. Speed 0 under reduced motion, and the element removes itself if WebGL is unavailable, leaving the flat background colour.
 
 ## Type
 Host Grotesk (variable, self-hosted) for everything that speaks. Barlow Condensed for signage, and nothing else on the page is uppercase.
@@ -26,9 +22,9 @@ Host Grotesk (variable, self-hosted) for everything that speaks. Barlow Condense
 - signage 0.82rem, tracked 0.13em, uppercase
 
 ## Layout
-`--max: 1180px`, `--gut: clamp(20px, 5vw, 88px)`, and a `--col` token so every hairline in the page aligns to the same content width. The descent uses a two-column grid: a numeral gauge, then the text. The rail is fixed to the right edge, clear of that column.
+`--max: 1180px`, `--gut: clamp(20px, 5vw, 88px)`, and a `--col` token so every hairline in the page aligns to the same content width. The chapters use a two-column grid: a numeral, then the text, with a vertical rule between them running the height of the sequence. The rail is fixed to the right edge, clear of that column.
 
-No cards. No logo wall. No icons. The structural devices are the floor numerals, the shaft, and one hairline per floor.
+No cards. No logo wall. No icons. The structural devices are the chapter numerals, the vertical rule they sit against, and one hairline per chapter.
 
 ## Motion
-One page-load sequence: the hero's lines rise out of a mask, then the supporting copy. On scroll: the background interpolates, the rail car follows, each statement rises once as it arrives, and the sheet is scrubbed. Buttons fill from the left. Nothing bounces. Every one of these has a reduced-motion form that resolves instantly, and the page is complete without JavaScript running.
+One page-load sequence: the hero's lines rise out of a mask, then the supporting copy. On scroll: the rail car follows, each statement rises once as it arrives, and the sheet is scrubbed. The masked lines carry bottom padding and a matching negative margin, or the clip cuts the descenders off. Buttons fill from the left. Nothing bounces. Every one of these has a reduced-motion form that resolves instantly, and the page is complete without JavaScript running.

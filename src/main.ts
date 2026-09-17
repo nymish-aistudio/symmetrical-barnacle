@@ -1,14 +1,13 @@
-
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { initScroll, wireAnchors } from './lib/scroll';
-import { setupDescent } from './lib/descent';
+import { initScroll, reduceMotion, wireAnchors } from './lib/scroll';
+import { setupBackdrop } from './lib/backdrop';
 import { setupLift } from './lib/lift';
 import { setupReveals } from './lib/reveal';
 import { setupSheet } from './lib/sheet';
 
 initScroll();
 wireAnchors();
-const refreshDescent = setupDescent();
+setupBackdrop(reduceMotion);
 setupLift();
 setupSheet();
 
@@ -21,6 +20,5 @@ stick();
 document.fonts.ready.then(() => {
   setupReveals();
   ScrollTrigger.refresh();
-  refreshDescent();
   document.documentElement.classList.add('is-ready');
 });

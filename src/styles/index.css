@@ -8,23 +8,15 @@
 @font-face { font-family: 'Barlow Condensed'; src: url('/fonts/BarlowCondensed-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
 
 :root {
-  /* the two ends of the descent */
-  --paper: #f2f6fa;  --paper-edge: #e6ecf2;
-  --ink: #0f1623;    --ink-2: #515c6c;
-  --deep: #0c131d;   --deep-edge: #18202c;
-  --on-deep: #ebeff4; --on-deep-2: #9ea6ae;
-  --amber: #b96912;  --amber-lit: #eaa950;
-
-  /* live tokens: JS interpolates these as you descend, so everything follows */
-  --bg: var(--paper);
-  --fg: var(--ink);
-  --fg-2: var(--ink-2);
+  --bg: #eef2f8;
+  --fg: #0f1623;
+  --fg-2: #49535f;
   --fg-3: color-mix(in oklab, var(--fg) 68%, var(--bg));
-  --fg-4: color-mix(in oklab, var(--fg) 42%, var(--bg));
-  --rule: color-mix(in oklab, var(--fg) 14%, var(--bg));
-  --rule-2: color-mix(in oklab, var(--fg) 30%, var(--bg));
-  --accent: var(--amber);
-  --logo-invert: 0;
+  --fg-4: color-mix(in oklab, var(--fg) 56%, var(--bg));
+  --rule: color-mix(in oklab, var(--fg) 15%, var(--bg));
+  --rule-2: color-mix(in oklab, var(--fg) 32%, var(--bg));
+  --accent: #b05f0d;
+  --accent-lit: #eaa950;
 
   --ff: 'Host Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --ff-sign: 'Barlow Condensed', 'Host Grotesk', sans-serif;
@@ -41,11 +33,11 @@
 
 @supports (color: oklch(0.5 0.1 200)) {
   :root {
-    --paper: oklch(0.972 0.007 250); --paper-edge: oklch(0.94 0.01 250);
-    --ink: oklch(0.2 0.028 262);     --ink-2: oklch(0.47 0.03 258);
-    --deep: oklch(0.185 0.024 260);  --deep-edge: oklch(0.24 0.026 258);
-    --on-deep: oklch(0.95 0.008 250); --on-deep-2: oklch(0.72 0.015 250);
-    --amber: oklch(0.6 0.135 60);    --amber-lit: oklch(0.78 0.13 72);
+    --bg: oklch(0.962 0.009 250);
+    --fg: oklch(0.2 0.028 262);
+    --fg-2: oklch(0.44 0.028 258);
+    --accent: oklch(0.57 0.135 58);
+    --accent-lit: oklch(0.78 0.13 72);
   }
 }
 
@@ -60,7 +52,6 @@ body {
   line-height: 1.6;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.1s linear;
 }
 .lenis.lenis-smooth { scroll-behavior: auto; }
 a { color: inherit; text-decoration: none; }
@@ -78,6 +69,16 @@ img { display: block; }
 .skip:focus { transform: none; }
 
 .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gut); }
+
+/* ------------------------------------------------------------ backdrop --- */
+.backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s ease; }
+.backdrop.is-on { opacity: 1; }
+.backdrop::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(130% 105% at 50% 34%, transparent 42%, color-mix(in oklab, var(--fg) 9%, transparent) 100%);
+}
+.backdrop canvas { display: block; width: 100%; height: 100%; }
+main, .foot { position: relative; z-index: 1; }
 
 /* ---------------------------------------------------------------- type --- */
 .sign {
@@ -104,8 +105,8 @@ img { display: block; }
 .prose { font-size: 1.05rem; line-height: 1.62; color: var(--fg-2); max-width: 42ch; text-wrap: pretty; }
 
 /* masked line reveal: the statement rises out of the page */
-.line { display: block; overflow: hidden; }
-.line > span { display: block; will-change: transform; }
+.line-mask { padding-bottom: 0.2em; margin-bottom: -0.2em; }
+.line { display: block; will-change: transform; }
 
 /* ----------------------------------------------------------------- nav --- */
 .nav {
@@ -121,7 +122,7 @@ img { display: block; }
   box-shadow: 0 1px 0 var(--rule);
 }
 .mark { display: inline-flex; align-items: center; gap: 11px; font-weight: 600; font-size: 1.12rem; letter-spacing: -0.015em; }
-.mark img, .foot__brand img { width: 15px; height: 25px; object-fit: contain; filter: invert(var(--logo-invert)); }
+.mark img, .foot__brand img { width: 15px; height: 25px; object-fit: contain; }
 .nav__actions { display: flex; align-items: center; gap: 10px; }
 
 /* buttons: the fill arrives from the left, like a lift car */
@@ -242,9 +243,9 @@ img { display: block; }
 }
 .sheet__paper {
   grid-column: 2; position: relative; isolation: isolate;
-  background: #f7f4ee; color: #22201c; border-radius: 2px;
+  background: #fcfaf5; color: #22201c; border-radius: 2px;
   padding: clamp(20px, 2.4vw, 30px) clamp(20px, 2.6vw, 34px) clamp(24px, 3vw, 38px);
-  box-shadow: 0 1px 2px rgba(10, 14, 22, 0.14), 0 18px 46px -18px rgba(10, 14, 22, 0.45);
+  box-shadow: 0 1px 1px rgba(15, 22, 35, 0.06), 0 2px 6px rgba(15, 22, 35, 0.06), 0 22px 48px -20px rgba(15, 22, 35, 0.4);
   font-size: clamp(0.76rem, 0.86vw, 0.9rem); line-height: 1.5;
 }
 .sheet__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-size: 1.35em; letter-spacing: -0.01em; margin-bottom: 18px; }
@@ -258,14 +259,15 @@ img { display: block; }
 /* the field highlights: what the system reads */
 .sheet__mark {
   position: absolute; z-index: -1; left: -6px; right: -6px; top: 1px; bottom: 1px;
-  background: var(--amber-lit); opacity: 0.5; border-radius: 1px;
+  background: var(--accent-lit); opacity: 0.55; border-radius: 1px;
   transform: scaleX(0); transform-origin: left;
 }
 .sheet__record { grid-column: 3; padding-top: 6px; }
 .sheet__rec-head { margin-bottom: 14px; }
 .sheet__grid { display: grid; grid-template-columns: 1.7fr 1fr 0.8fr 1fr; gap: 6px 8px; }
-.sheet__grid b, .sheet__grid s { display: block; height: 12px; border-radius: 1px; background: var(--fg-4); opacity: 0.3; }
+.sheet__grid b, .sheet__grid s { display: block; height: 12px; border-radius: 1px; background: var(--fg-2); }
 .sheet__grid b { background: var(--accent); height: 9px; }
+.sheet__grid s { text-decoration: none; }
 @media (max-width: 860px) {
   .sheet { grid-template-columns: minmax(0, 1fr); gap: 34px; }
   .sheet__paper, .sheet__record { grid-column: 1; }

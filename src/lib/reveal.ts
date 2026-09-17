@@ -25,9 +25,8 @@ export function setupReveals() {
   const intro = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.12 });
   if (heroHeading) {
     const s = split(heroHeading);
-    intro.from(s.lines, { yPercent: 115, duration: 1.25, stagger: 0.085 }, 0);
+    intro.from(s.lines, { yPercent: 135, duration: 1.25, stagger: 0.085 }, 0);
   }
-  intro.to(heroRest.filter((e) => e.dataset.load === '1'), { opacity: 1, duration: 0.9 }, 0.35);
   intro.fromTo(heroRest.filter((e) => e.dataset.load === '2'), { y: 16 }, { opacity: 1, y: 0, duration: 1.05 }, 0.5);
   intro.fromTo(heroRest.filter((e) => e.dataset.load === '3'), { y: 14 }, { opacity: 1, y: 0, duration: 1 }, 0.66);
   intro.to(heroRest.filter((e) => e.dataset.load === '4'), { opacity: 1, duration: 0.9 }, 1.1);
@@ -37,7 +36,7 @@ export function setupReveals() {
     if (el === heroHeading) return;
     const s = split(el);
     gsap.from(s.lines, {
-      yPercent: 112, duration: 1.05, ease: 'expo.out', stagger: 0.07,
+      yPercent: 132, duration: 1.05, ease: 'expo.out', stagger: 0.07,
       scrollTrigger: { trigger: el, start: 'top 84%', once: true },
     });
   });

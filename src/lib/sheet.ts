@@ -21,7 +21,7 @@ export function setupSheet() {
   }
 
   gsap.set(marks, { scaleX: 0 });
-  gsap.set(cells, { opacity: 0.2 });
+  gsap.set(cells, { opacity: 0.14 });
 
   const tl = gsap.timeline({
     defaults: { ease: 'none' },

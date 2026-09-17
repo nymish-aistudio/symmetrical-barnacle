@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>AiStudio — Go where the work is</title>
   <meta name="description" content="AiStudio builds AI for private equity with engineers inside the fund, inside the deal, and inside the companies themselves." />
-  <meta name="theme-color" content="#f2f4f9" />
+  <meta name="theme-color" content="#eef2f8" />
   <meta property="og:title" content="AiStudio — Go where the work is" />
   <meta property="og:description" content="AiStudio builds AI for private equity with engineers inside the fund, inside the deal, and inside the companies themselves." />
   <meta property="og:type" content="website" />
@@ -35,34 +35,35 @@
 <!-- the elevator: where you are in the building -->
 <nav class="lift" id="lift" aria-label="Sections">
   <ol class="lift__list">
-    <li><a href="#surface" data-lift="surface"><span>Surface</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#surface" data-lift="surface"><span>Top</span><i aria-hidden="true"></i></a></li>
     <li><a href="#fund" data-lift="fund"><span>The fund</span><i aria-hidden="true"></i></a></li>
     <li><a href="#deal" data-lift="deal"><span>The deal</span><i aria-hidden="true"></i></a></li>
     <li><a href="#company" data-lift="company"><span>The company</span><i aria-hidden="true"></i></a></li>
     <li><a href="#floor" data-lift="floor"><span>The floor</span><i aria-hidden="true"></i></a></li>
     <li><a href="#sheet" data-lift="sheet"><span>The sheet</span><i aria-hidden="true"></i></a></li>
     <li><a href="#build" data-lift="build"><span>How we build</span><i aria-hidden="true"></i></a></li>
-    <li><a href="#altitudes" data-lift="altitudes"><span>Every altitude</span><i aria-hidden="true"></i></a></li>
+    <li><a href="#altitudes" data-lift="altitudes"><span>One team</span><i aria-hidden="true"></i></a></li>
     <li><a href="#who" data-lift="who"><span>Who we are</span><i aria-hidden="true"></i></a></li>
     <li><a href="#start" data-lift="start"><span>Start</span><i aria-hidden="true"></i></a></li>
   </ol>
   <div class="lift__track" aria-hidden="true"><span class="lift__car" id="lift-car"></span></div>
 </nav>
 
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
 <main>
 
   <!-- ─────────────────────────── surface ─────────────────────────── -->
   <section class="hero" id="surface" aria-labelledby="h-surface">
     <div class="wrap hero__in">
-      <p class="sign hero__sign" data-load="1"><b>00</b> Surface</p>
       <h1 class="statement statement--hero" id="h-surface" data-split>Go where the work is.</h1>
       <p class="lede" data-load="2">AiStudio builds AI for private equity the only way we know it works: with engineers inside the fund, inside the deal, and inside the companies themselves.</p>
       <div class="actions" data-load="3">
         <a class="plate plate--solid" href="https://calendly.com/sharad-aistudio/30min" target="_blank" rel="noopener"><span>Book a conversation</span></a>
-        <a class="plate plate--ghost" href="#fund"><span>Descend</span></a>
+        <a class="plate plate--ghost" href="#fund"><span>How it works</span></a>
       </div>
     </div>
-    <p class="hero__hint sign" data-load="4" aria-hidden="true">Scroll to descend</p>
+    <p class="hero__hint sign" data-load="4" aria-hidden="true">Scroll</p>
   </section>
 
   <!-- ─────────────────────────── the descent ─────────────────────────── -->
@@ -70,10 +71,10 @@
 
     <section class="floor" id="fund" aria-labelledby="h-fund">
       <div class="wrap floor__in">
-        <p class="floor__gauge" aria-hidden="true">−1</p>
+        <p class="floor__gauge" aria-hidden="true">01</p>
         <div class="floor__body">
           <p class="sign floor__name">The fund</p>
-          <h2 class="statement" id="h-fund" data-split>From up here, a company is a row.</h2>
+          <h2 class="statement" id="h-fund" data-split>To a fund, a company is a row.</h2>
           <p class="prose">Revenue, margin, headcount, a hold period. A partner sees forty of these. The row is true, and it explains almost nothing about where the time goes.</p>
         </div>
       </div>
@@ -81,7 +82,7 @@
 
     <section class="floor" id="deal" aria-labelledby="h-deal">
       <div class="wrap floor__in">
-        <p class="floor__gauge" aria-hidden="true">−2</p>
+        <p class="floor__gauge" aria-hidden="true">02</p>
         <div class="floor__body">
           <p class="sign floor__name">The deal</p>
           <h2 class="statement" id="h-deal" data-split>The data room is what a company chooses to show.</h2>
@@ -92,10 +93,10 @@
 
     <section class="floor" id="company" aria-labelledby="h-company">
       <div class="wrap floor__in">
-        <p class="floor__gauge" aria-hidden="true">−3</p>
+        <p class="floor__gauge" aria-hidden="true">03</p>
         <div class="floor__body">
           <p class="sign floor__name">The company</p>
-          <h2 class="statement" id="h-company" data-split>Down here, the business runs on paper.</h2>
+          <h2 class="statement" id="h-company" data-split>Inside, the business runs on paper.</h2>
           <p class="prose">Email threads twenty people long. Spreadsheets with six versions. A system from another decade that everyone has learned to work around. Nobody drew this. It grew. And it is where the value is.</p>
         </div>
       </div>
@@ -103,7 +104,7 @@
 
     <section class="floor" id="floor" aria-labelledby="h-floor">
       <div class="wrap floor__in">
-        <p class="floor__gauge" aria-hidden="true">−4</p>
+        <p class="floor__gauge" aria-hidden="true">04</p>
         <div class="floor__body">
           <p class="sign floor__name">The floor</p>
           <h2 class="statement" id="h-floor" data-split>This is where we sit.</h2>
@@ -114,7 +115,7 @@
 
     <section class="floor floor--sheet" id="sheet" aria-labelledby="h-sheet">
       <div class="wrap floor__in">
-        <p class="floor__gauge" aria-hidden="true">−5</p>
+        <p class="floor__gauge" aria-hidden="true">05</p>
         <div class="floor__body">
           <p class="sign floor__name">The sheet</p>
           <h2 class="statement" id="h-sheet" data-split>One document at a time, the paper becomes a system.</h2>
@@ -171,7 +172,7 @@
   <!-- ─────────────────────────── every altitude ─────────────────────────── -->
   <section class="sec" id="altitudes" aria-labelledby="h-altitudes">
     <div class="wrap">
-      <h2 class="statement" id="h-altitudes" data-split>One team, every altitude.</h2>
+      <h2 class="statement" id="h-altitudes" data-split>The same team, in all three places.</h2>
       <p class="lede" data-reveal>What we learn on the floor changes how we read a data room. What we build for one company becomes a pattern for the next. The fund sees the same measures across its portfolio, and the deal team sees what a company is really made of before it buys.</p>
       <ul class="pillars">
         <li data-reveal><b>Before the deal.</b> Diligence with working software as the output, not a slide on AI potential.</li>
@@ -185,7 +186,7 @@
   <section class="sec" id="who" aria-labelledby="h-who">
     <div class="wrap">
       <h2 class="statement" id="h-who" data-split>We learned this where mistakes cost money.</h2>
-      <p class="lede" data-reveal>AiStudio was founded by engineers from quantitative trading, where software is judged by what it does when the market opens. We are registered in DIFC, Dubai, with an engineering team across Dubai and India, and we deploy on site across Europe.</p>
+      <p class="lede" data-reveal>AiStudio was founded by engineers from quantitative trading and venture capital, where software is judged by what it does when the market opens. We are registered in DIFC, Dubai, with an engineering team across Dubai and India, and we deploy on site across Europe.</p>
 
       <ul class="people">
         <li data-reveal>

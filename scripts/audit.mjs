@@ -38,26 +38,24 @@ for (const id of ['fund', 'sheet', 'build', 'who', 'start', 'surface']) {
   }, id));
 }
 
-// the descent must be fully dark on the floor and fully light again at the end
-await page.click('.lift__list a[href="#floor"]'); await settle();
-const onFloor = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim());
-await page.click('.lift__list a[href="#start"]'); await settle();
-const atStart = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim());
-
-// contrast of body text against its own background, top and bottom
-const lum = (hex) => { const v = hex.replace('#', '').match(/../g).map((h) => { const c = parseInt(h, 16) / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; }); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
-const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return +((x + 0.05) / (y + 0.05)).toFixed(2); };
-const rgbToHex = (s) => '#' + s.match(/\d+/g).slice(0, 3).map((n) => (+n).toString(16).padStart(2, '0')).join('');
-const contrast = {};
-for (const [name, sel, at] of [['floor prose', '#floor .prose', 'floor'], ['floor sign', '#floor .floor__name', 'floor'], ['floor gauge', '#floor .floor__gauge', 'floor'], ['rail idle on deep', '.lift__list a:not(.is-at)', 'floor'], ['fund prose', '#fund .prose', 'fund'], ['fund sign', '#fund .floor__name', 'fund'], ['rail idle on light', '.lift__list a:not(.is-at)', 'who'], ['who role', '.people__role', 'who'], ['footer', '.foot__in p', 'who']]) {
-  await page.click(`.lift__list a[href="#${at}"]`).catch(() => {});
-  await settle();
-  contrast[name] = await page.evaluate((sel) => {
-    const el = document.querySelector(sel); if (!el) return null;
-    return { fg: getComputedStyle(el).color, bg: getComputedStyle(document.body).backgroundColor };
-  }, sel);
-  if (contrast[name]) contrast[name] = ratio(rgbToHex(contrast[name].fg), rgbToHex(contrast[name].bg));
-}
+// contrast: resolve any CSS colour format through a canvas, and test against the
+// darkest tone the shader backdrop can paint as well as the flat fallback
+const WORST_BACKDROP = '#ccdcf2';
+const contrast = await page.evaluate((worst) => {
+  const cv = document.createElement('canvas'); cv.width = cv.height = 1;
+  const cx = cv.getContext('2d');
+  const rgb = (c) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = '#000'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); return Array.from(cx.getImageData(0, 0, 1, 1).data).slice(0, 3); };
+  const lum = (c) => { const v = rgb(c).map((n) => { const x = n / 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return +((x + 0.05) / (y + 0.05)).toFixed(2); };
+  const bg = getComputedStyle(document.body).backgroundColor;
+  const out = {};
+  for (const [name, sel] of [['prose', '.prose'], ['sign', '.floor__name'], ['gauge', '.floor__gauge'], ['rail idle', '.lift__list a:not(.is-at)'], ['lede', '.lede'], ['role', '.people__role'], ['footer', '.foot__in p'], ['pillar', '.pillars li']]) {
+    const el = document.querySelector(sel); if (!el) continue;
+    const fg = getComputedStyle(el).color;
+    out[name] = [ratio(fg, bg), ratio(fg, worst)];
+  }
+  return out;
+}, WORST_BACKDROP);
 
 // keyboard: the first tabs must reach the skip link and the nav actions
 await page.reload({ waitUntil: 'networkidle' });
@@ -67,5 +65,5 @@ const tabs = [];
 for (let i = 0; i < 5; i++) { await page.keyboard.press('Tab'); tabs.push(await page.evaluate(() => (document.activeElement.getAttribute('aria-label') || document.activeElement.textContent || '').trim().slice(0, 26))); }
 
 const headings = await page.evaluate(() => Array.from(document.querySelectorAll('h1,h2,h3')).map((h) => h.tagName));
-console.log(JSON.stringify({ anchors, onFloor, atStart, contrast, tabs, headings: `${headings.filter((h) => h === 'H1').length}×h1, ${headings.filter((h) => h === 'H2').length}×h2, ${headings.filter((h) => h === 'H3').length}×h3`, errors: errs }, null, 1));
+console.log(JSON.stringify({ anchors, contrast, tabs, headings: `${headings.filter((h) => h === 'H1').length}×h1, ${headings.filter((h) => h === 'H2').length}×h2, ${headings.filter((h) => h === 'H3').length}×h3`, errors: errs }, null, 1));
 await browser.close();
