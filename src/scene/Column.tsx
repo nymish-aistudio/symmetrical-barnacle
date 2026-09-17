@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import * as THREE from 'three';
 import { FrontSide } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { MeshTransmissionMaterial, Text } from '@react-three/drei';
+import { Text } from '@react-three/drei';
 import { FLOORS, SLAB } from '../story';
 
 function roundedRect(w: number, h: number, r: number, path: THREE.Path) {
@@ -59,25 +59,21 @@ export function Column({ mobile }: { mobile: boolean }) {
 
   return (
     <group>
-      <mesh geometry={merged}>
-        {mobile ? (
-          <meshPhysicalMaterial color="#c8d3ea" transparent opacity={0.22} roughness={0.55} metalness={0} depthWrite={false} />
-        ) : (
-          <MeshTransmissionMaterial
-            samples={3} resolution={320} transmission={1} roughness={0.22} thickness={0.7} ior={1.42}
-            chromaticAberration={0.04} anisotropicBlur={0.3} distortion={0.05} distortionScale={0.5} temporalDistortion={0.02}
-            color="#cfe0fb" attenuationDistance={5} attenuationColor="#a9c4f5"
-          />
-        )}
+      <mesh geometry={merged} renderOrder={2}>
+        {/* clear, not frosted: everything below must stay legible through four floors */}
+        <meshPhysicalMaterial
+          color="#9fb6e0" transparent opacity={mobile ? 0.26 : 0.22} roughness={0.12} metalness={0.05}
+          clearcoat={1} clearcoatRoughness={0.06} envMapIntensity={1.4} depthWrite={false} side={THREE.DoubleSide}
+        />
       </mesh>
       <lineSegments geometry={edges}>
-        <lineBasicMaterial color="#b4c6e6" transparent opacity={0.45} depthWrite={false} />
+        <lineBasicMaterial color="#d3def2" transparent opacity={0.62} depthWrite={false} />
       </lineSegments>
       <lineSegments geometry={grid}>
-        <lineBasicMaterial color="#7f93b8" transparent opacity={0.16} depthWrite={false} />
+        <lineBasicMaterial color="#8fa3c8" transparent opacity={0.2} depthWrite={false} />
       </lineSegments>
       <lineSegments geometry={struts}>
-        <lineBasicMaterial color="#8a98b6" transparent opacity={0.18} depthWrite={false} />
+        <lineBasicMaterial color="#9aaacb" transparent opacity={0.26} depthWrite={false} />
       </lineSegments>
       {FLOORS.map((f) => [-1, 1].map((side) => (
         <Text
@@ -87,8 +83,8 @@ export function Column({ mobile }: { mobile: boolean }) {
           rotation={[0, side * Math.PI / 2, 0]}
           fontSize={0.62}
           letterSpacing={0.12}
-          color="#c3cee4"
-          fillOpacity={0.85}
+          color="#dbe4f5"
+          fillOpacity={0.95}
           anchorX="center"
           anchorY="middle"
           material-side={FrontSide}

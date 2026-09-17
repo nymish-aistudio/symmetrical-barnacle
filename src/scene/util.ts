@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
-import { CanvasTexture, Color, InstancedMesh, Object3D } from 'three';
+import { BufferGeometry, CanvasTexture, Color, EdgesGeometry, Float32BufferAttribute, InstancedMesh, Matrix4, Object3D, Vector3 } from 'three';
 import { SLAB } from '../story';
 
 /** deterministic PRNG so every load draws the same building */
@@ -75,4 +75,20 @@ export function glowTexture() {
   g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
   glow = new CanvasTexture(c);
   return glow;
+}
+
+export interface Xf { p: [number, number, number]; r?: [number, number, number]; s?: [number, number, number] }
+
+/** Outline many copies of a shape in one draw call: crisp edges are what make small boxes legible at a distance. */
+export function bakeEdges(base: BufferGeometry, xfs: Xf[], threshold = 30): BufferGeometry {
+  const edges = new EdgesGeometry(base, threshold);
+  const src = edges.attributes.position.array as Float32Array;
+  const out: number[] = [];
+  const m = new Matrix4(), o = new Object3D(), v = new Vector3();
+  for (const x of xfs) {
+    o.position.set(...x.p); o.rotation.set(...(x.r ?? [0, 0, 0])); o.scale.set(...(x.s ?? [1, 1, 1])); o.updateMatrix(); m.copy(o.matrix);
+    for (let i = 0; i < src.length; i += 3) { v.set(src[i], src[i + 1], src[i + 2]).applyMatrix4(m); out.push(v.x, v.y, v.z); }
+  }
+  edges.dispose();
+  const g = new BufferGeometry(); g.setAttribute('position', new Float32BufferAttribute(out, 3)); return g;
 }

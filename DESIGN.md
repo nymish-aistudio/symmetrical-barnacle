@@ -12,7 +12,13 @@ Host Grotesk (variable, 300–800) for statements and body. Barlow Condensed 500
 Copy in a 620px column on the left over a soft scrim; the 3D subject sits right of centre. Elevator panel fixed right. On phones the copy sits in the bottom third and the camera steps back.
 
 ## Environment
-Gradient sky dome (steel blue above, warming below with depth), survey-grid ground far below, forty ghost buildings in the fog, light shafts down the atrium, a key light from above.
+Gradient sky dome with horizon glow (steel blue above, warming below with depth), survey-grid ground far below, a skyline of dark towers with drawn edges and lit windows, light shafts down the atrium, a key light from above and a cool fill from behind. Thin fog.
+
+## Real things
+Every floor is furnished with real low-poly models at 1.5× life size; the fund floor stays abstract (the higher you are, the more abstract the view). Kit pastels are re-toned by material name: chairs slate, wood warm grey, plants deep green. City facades glow faintly from their own colormap.
+
+## Clarity rules
+Clear glass, never frosted. Every prop outlined. No depth of field. Bloom only on true lights. Resolution locked after the loader.
 
 ## Motion
 Scroll is the story. Camera dwell curve per chapter; chapter text reveals once per approach and reverses on leave; plaques scramble in; floors crossed pulse the aberration. Everything has a reduced-motion form.

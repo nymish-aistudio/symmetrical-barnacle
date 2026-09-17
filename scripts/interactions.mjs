@@ -14,14 +14,17 @@ page.on('console', (m) => { if (m.type() === 'error') errs.push(m.text().slice(0
 await page.goto(url + '/?fx=0&glass=0&snap=1', { waitUntil: 'load' });
 await page.waitForFunction(() => window.__rig && window.__rig.frames > 4 && !document.querySelector('.intro'), null, { timeout: 120000 });
 // elevator: ride to the floor
-await page.evaluate(() => document.querectorAll ? null : document.querySelectorAll('.lift__list li button')[4].click());
-await page.waitForTimeout(2600);
+await page.evaluate(() => document.querySelectorAll('.lift__list li button')[4].click());
+// wait for the smooth scroll to settle, then for the reveal
+await page.waitForFunction(() => Math.abs(window.__lenis.targetScroll - window.scrollY) < 2, null, { timeout: 30000 }).catch(() => {});
+await page.waitForTimeout(1800);
 const lift = await page.evaluate(() => ({ active: document.querySelector('.lift__list .is-active')?.textContent, scrollY: Math.round(scrollY), depth: +window.__rig.depth.toFixed(2), plaque: document.querySelector('#floor .ch__plaque')?.textContent, bodyOpacity: getComputedStyle(document.querySelector('#floor .ch__body')).opacity }));
 // descend button from the surface
 await page.evaluate(() => window.__lenis.scrollTo(0, { immediate: true }));
 await page.waitForTimeout(600);
 await page.click('#surface .plate--ghost');
-await page.waitForTimeout(2400);
+await page.waitForFunction(() => Math.abs(window.__lenis.targetScroll - window.scrollY) < 2, null, { timeout: 30000 }).catch(() => {});
+await page.waitForTimeout(400);
 const descend = await page.evaluate(() => ({ active: document.querySelector('.lift__list .is-active')?.textContent, scrollY: Math.round(scrollY) }));
 // keyboard reach from the top
 await page.evaluate(() => window.__lenis.scrollTo(0, { immediate: true }));

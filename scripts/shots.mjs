@@ -47,7 +47,7 @@ if (og) {
   await page.evaluate(() => { document.querySelector('.nav')?.remove(); document.querySelector('.lift')?.remove(); document.querySelector('.ch__hint')?.remove(); });
   // let the canvas finish fading in and the arrival dolly settle
   await page.waitForFunction(() => getComputedStyle(document.querySelector('.gl')).opacity === '1', null, { timeout: 30000 }).catch(() => {});
-  await page.waitForFunction((n) => window.__rig.frames > n, await page.evaluate(() => window.__rig.frames + 40), { timeout: 240000 }).catch(() => {});
+  await page.waitForFunction((n) => window.__rig.frames > n, await page.evaluate(() => window.__rig.frames + 24), { timeout: 400000 }).catch(() => {});
   await page.waitForTimeout(500);
   await page.screenshot({ path: 'public/og.png' });
   console.log('wrote public/og.png');

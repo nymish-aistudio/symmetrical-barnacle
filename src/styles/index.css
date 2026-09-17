@@ -116,7 +116,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .story { position: relative; z-index: var(--z-story); }
 /* a soft shadow under the copy column so the words stay readable over the lights */
 .scrim { position: fixed; inset: 0; z-index: var(--z-story); pointer-events: none;
-  background: linear-gradient(90deg, color-mix(in oklab, var(--bg) 82%, transparent) 0%, color-mix(in oklab, var(--bg) 45%, transparent) 34%, transparent 58%); }
+  background: linear-gradient(90deg, color-mix(in oklab, var(--bg) 78%, transparent) 0%, color-mix(in oklab, var(--bg) 36%, transparent) 30%, transparent 50%); }
 @media (max-width: 820px) { .scrim { background: linear-gradient(180deg, transparent 30%, color-mix(in oklab, var(--bg) 55%, transparent) 62%, color-mix(in oklab, var(--bg) 88%, transparent) 100%); } }
 .scrim--right { background: linear-gradient(270deg, color-mix(in oklab, var(--bg) 72%, transparent) 0%, color-mix(in oklab, var(--bg) 30%, transparent) 12%, transparent 24%); }
 @media (max-width: 1100px) { .scrim--right { display: none; } }

@@ -3,7 +3,7 @@
  * Composition QA without the GPU: hold the camera at each station (?cam=<id>&snap=1) with plain slabs
  * and no post-processing, wait for real frames, and screenshot.
  *   node scripts/stations.mjs [--url http://127.0.0.1:5173] [--out shots-st] [--mobile] [--full]
- * --full keeps glass and post-processing (very slow in software rendering).
+ * --full keeps post-processing (slow in software rendering; pair with --size 960x600). --ids a,b picks stations.
  */
 import { chromium } from 'playwright-core';
 import { mkdirSync, existsSync } from 'node:fs';
@@ -15,12 +15,13 @@ const flag = (n) => argv.includes(`--${n}`);
 const opt = (n, d) => { const i = argv.indexOf(`--${n}`); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : d; };
 const url = opt('url', 'http://127.0.0.1:5173'), out = opt('out', 'shots-st');
 const mobile = flag('mobile'), full = flag('full');
+const [vw, vh] = (opt('size', mobile ? '390x844' : '1440x900')).split('x').map(Number); // e.g. --size 960x600 for cheaper full-effects frames
 const ids = (opt('ids', '') || 'surface,fund,deal,company,floor,sheet,method,altitudes,who,start').split(',');
 
 const exe = [process.env.CHROME_PATH, join(homedir(), 'Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-mac-arm64/chrome-headless-shell')].filter(Boolean).find((p) => existsSync(p));
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: exe, headless: true, args: ['--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'] });
-const context = await browser.newContext({ viewport: mobile ? { width: 390, height: 844 } : { width: 1440, height: 900 }, deviceScaleFactor: 1, isMobile: mobile, hasTouch: mobile });
+const context = await browser.newContext({ viewport: { width: vw, height: vh }, deviceScaleFactor: 1, isMobile: mobile, hasTouch: mobile });
 for (const id of ids) {
   const page = await context.newPage();
   const errs = [];
