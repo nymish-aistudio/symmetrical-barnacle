@@ -7,7 +7,7 @@ brand
 web
 
 ## What it is
-A single-page narrative site for AiStudio, a forward-deployed AI engineering firm working with private-equity funds, their deals and their portfolio companies.
+A single-page narrative site for AiStudio, a forward-deployed AI engineering firm working with private-equity funds, their deals and their portfolio companies. Founded by engineers from quantitative trading and venture capital.
 
 ## Who it is for
 Partners and operating partners at mid-market PE funds, and the leadership of their portfolio companies. Secondary: engineers deciding whether to join.

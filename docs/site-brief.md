@@ -23,7 +23,7 @@ One line for the whole site: *AiStudio builds AI for private equity the only way
 ## 2. Content rules
 
 - Nothing traceable to a client. No figures, sectors, countries, timelines or engagement details. Describe the pattern, never the instance.
-- Company facts are fine: founders, advisors, DIFC registration, team across Dubai and India, deployments on site across Europe.
+- Company facts are fine: founders, advisors, where the team has worked before. The DIFC registration is an address, not a claim: it belongs in the footer as one line, not in a sentence. Team size, office locations and where engineers deploy are not selling points and stay off the page.
 - One conversion: **Book a conversation** → https://calendly.com/sharad-aistudio/30min. Fallback: sharad@aistudio.ae.
 - Voice: quiet, precise, physical. Short sentences. Plain verbs. No hype words, no "leverage", no "unlock". Written by engineers who have shipped where mistakes cost money.
 - No em-dashes in copy. No exclamation marks. Sentence case everywhere except the signage system (see §4).
@@ -97,14 +97,14 @@ Job: pull back. After five chapters, name the three places the same team works. 
 ### 3.5 Who we are
 
 - Statement: **We learned this where mistakes cost money.**
-- Body: AiStudio was founded by engineers from quantitative trading, where software is judged by what it does when the market opens. We are registered in DIFC, Dubai, with an engineering team across Dubai and India, and we deploy on site across Europe.
+- Body: AiStudio was founded by engineers from quantitative trading and venture capital, where software is judged by what it does when the market opens.
 - Founders (two columns):
   - **Sharad Mirani**, Managing Partner, AI and Engineering. Quantitative trading at Tower Research, Optiver and Goldman Sachs. Leads engineering and the systems we put into production. LinkedIn: https://linkedin.com/in/sharad157 · sharad@aistudio.ae
   - **Monish Pathare**, Managing Partner, Business and Operations. Built data-science and automation frameworks from scratch across a venture portfolio. Runs client relationships and delivery. LinkedIn: https://linkedin.com/in/monish-pathare · monish@aistudio.ae
 - Advisors (one line each): Sagar Savla, product and AI advisor, Google DeepMind · Ankush Thakkar, go-to-market advisor, L.E.K. Consulting · Ravi Lakhani, capital and networks, ABRA Ventures
 - Where the team has worked (a quiet inline list, not logos): Goldman Sachs, Optiver, Tower Research, Google DeepMind, L.E.K. Consulting, Lightbox Ventures.
 
-Job: credibility without a wall of logos. Names and places, in text.
+Job: credibility without a wall of logos. One sentence of pedigree, then the people. No geography: it is not what a partner is deciding on.
 
 ### 3.6 Start
 
@@ -115,7 +115,7 @@ Job: credibility without a wall of logos. Names and places, in text.
 
 ### 3.7 Footer
 
-- AiStudio · Registered in DIFC, Dubai. Engineers across Dubai and India, deployed on site across Europe.
+- AiStudio · Dubai International Financial Centre, Dubai
 - Links: LinkedIn (https://www.linkedin.com/company/aistudioae/) · sharad@aistudio.ae · monish@aistudio.ae · © 2026
 
 ### Navigation
