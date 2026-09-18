@@ -1,7 +1,3 @@
-> **Superseded.** This describes the WebGL build, which was stopped on 2026-09-18 as too much.
-> The site that shipped is the 2D editorial build: see `docs/site-brief.md` and `DESIGN.md`.
-> Kept for the reasoning behind the story, which carried over unchanged.
-
 # AiStudio site — design spec (v2, "Go where the work is")
 
 Date: 2026-09-17
@@ -45,31 +41,18 @@ Interactive colour: ice blue `#9fc2ff` for the elevator car, hover fills and act
 ## Build
 
 - React 19 + React Three Fiber 9 + drei 10, Vite 8, TypeScript.
-- Glass floors: one merged geometry with a clear physical material (clearcoat, low roughness, ~22% opacity) so four floors stay legible through one another; the earlier transmission material blurred everything below it and was removed. Edges, struts and a survey grid on every slab as lines.
-- Every prop carries a baked edge outline (one line geometry per prop family). Small boxes read at a distance by their edges, not their shading.
+- Glass floors: one merged geometry with drei's transmission material (desktop) or a translucent physical material (mobile). Edges and struts as lines.
 - Props are instanced meshes generated procedurally from a seeded PRNG; positions spread evenly around each ring so any camera sees several.
 - Camera rides a centripetal Catmull–Rom spline through per-chapter stations; scroll picks the position with a dwell curve so it holds near each station; maath damping smooths it; the pointer breathes on it. Crossing a floor spikes chromatic aberration.
 - Environment: a gradient sky dome that warms with depth, a survey-grid ground far below, forty ghost buildings in the fog around ours ("a partner sees forty of these"), and light falling down the atrium. A key light from above so the props read as solid.
-- Post: SMAA, bloom kept to the true lights (threshold 0.9), chromatic aberration only on floor crossings, a whisper of grain, vignette, ACES. No depth of field: it was the main source of softness. Resolution is decided while the loader is up (a short performance sample can step it down) and then locked, because post-processing buffers must not resize mid-scroll.
+- Post: SMAA, bloom kept to the true lights, a light depth of field on the chapter's look point (desktop), chromatic aberration only on floor crossings, a whisper of grain, vignette. Resolution adapts to frame rate.
 - Lenis smooth scroll drives progress; GSAP ScrollTrigger reveals chapter text (masked lines, blur-in) and scrambles the plaque.
 - Reduced motion: no smooth scroll, no idle motion, instant chapter text, effects static. Mobile: fewer instances, no transmission, no depth of field, camera steps back on portrait.
 - Debug switches for QA: `?fx=0` (no post), `?glass=0` (plain slabs), `?snap=1` (camera snaps), `?cam=<id>` (hold a station).
 
-## Real things (v2.2)
-
-Procedural boxes never read as a place, so every floor is furnished with real low-poly models (Kenney, CC0) drawn through one instanced mesh per part:
-
-- The fund: the spreadsheet of light stays, with a boardroom at the west end (a long table, ten chairs, laptops, a screen on the wall).
-- The deal: four rows of tables stacked with archive boxes and binders, a wall of open shelving, and the target as an architectural model on a plinth, lit by a spot; tethers run from the boxes to the model.
-- The company: twelve desk clusters with monitors that glow, filing along the west wall, a kitchen corner and a lounge on the east, plants, floor lamps, and email travelling between screens.
-- The floor: a seven-segment conveyor with boxes riding it, two robot arms working, machines and pipes along the south, a catwalk and turning cogs on the west, pallets, a crane whose arm swings, a loader driving a loop and a parked flatbed.
-- Below: an industrial district on the ground with chimneys, tanks, containers and three vehicles on road loops. Around: a skyline of textured towers at 135–255 units whose facades glow from their own colormap.
-
-Lighting is a Poly Haven night HDRI at low intensity plus a key light; post adds a light desaturation so the kits sit in the night. The furniture kit's pastel materials are re-toned by name (chairs to slate, wood to warm grey).
-
 ## Environment (v2.1)
 
-A gradient sky dome with a horizon glow that warms with depth; a survey-grid ground far below; a skyline of thirty-six dark towers at 95–205 units with drawn edges, floor lines and lit windows ("a partner sees forty of these"); light falling down the atrium; a key light from above and a cool fill from behind so props read as solid. Fog is thin (0.0085) so the skyline keeps its contrast. Anti-aliasing is SMAA; bloom is kept to the true lights; depth of field is light; grain is a whisper; resolution adapts to frame rate. Sound was removed. Interactive colour is ice blue `#9fc2ff`.
+A gradient sky dome that warms with depth; a survey-grid ground far below; forty ghost buildings in the fog around ours ("a partner sees forty of these"); light falling down the atrium; a key light from above so props read as solid. Anti-aliasing is SMAA; bloom is kept to the true lights; depth of field is light; grain is a whisper; resolution adapts to frame rate. Sound was removed. Interactive colour is ice blue `#9fc2ff`.
 
 ## Non-goals
 
