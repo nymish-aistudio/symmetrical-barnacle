@@ -7,7 +7,7 @@ brand
 web
 
 ## What it is
-A single-page narrative site for AiStudio, a forward-deployed AI engineering firm working with private-equity funds, their deals and their portfolio companies. Founded by engineers from quantitative trading and venture capital.
+A single-page narrative site for AiStudio, a forward-deployed AI engineering firm working with private-equity funds, their deals and their portfolio companies.
 
 ## Who it is for
 Partners and operating partners at mid-market PE funds, and the leadership of their portfolio companies. Secondary: engineers deciding whether to join.
@@ -20,7 +20,6 @@ Quiet, precise, physical. Engineers who go where the work is and stay until it r
 
 ## Anti-references
 - Marketing pages that list engagements and figures (v1 of this site).
-- A full WebGL scene (v2 of this site): the story survived, the machinery did not.
 - Dark background plus glowing particles as decoration.
 - SaaS card grids, gradient text, glassmorphism as decoration.
 - Editorial magazine serif restraint.

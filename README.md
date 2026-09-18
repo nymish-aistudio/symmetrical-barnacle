@@ -1,18 +1,10 @@
 # AiStudio — Go where the work is
 
-The company site. It walks the reader from the fund's seat to the desk where the work happens, one chapter at a time, then pulls back to show that the same team works in all three places.
+The company site, built as a descent through a building. Scroll takes you from the altitude where a company is a row in a spreadsheet, down through the deal and the company to the floor where the work is, to one sheet of paper becoming a system, and back out to see the whole column.
 
-The story, the content rules and every line of copy live in [`docs/site-brief.md`](docs/site-brief.md). That file is the source of truth; the markup follows it.
+## Stack
 
-## How it is built
-
-No 3D. The page is plain HTML, CSS and TypeScript with GSAP and Lenis, about 55 kB gzipped plus the shader backdrop.
-
-- **The backdrop.** A slow mesh gradient with grain from [`@paper-design/shaders`](https://github.com/paper-design/shaders), mounted full-viewport behind the page. It gives the light somewhere to come from. It does not respond to scroll.
-- **The index.** Chapter numerals set against a vertical rule down the left of the text, with a hairline per chapter crossing it.
-- **The rail.** A fixed panel on the right: where you are, and a way to go straight there.
-
-The one piece of imagery is the sheet: a delivery note whose fields light up one by one as a record fills beside it. It is scrubbed, so the reader drives it.
+React 19, React Three Fiber 9, drei 10, postprocessing, GSAP 3.15 (ScrollTrigger, SplitText, ScrambleText), Lenis, maath, Vite 8, TypeScript. Fonts are self-hosted (Host Grotesk, Barlow Condensed) and the mark is the brand file in `public/`. No runtime requests leave the page except the Calendly link.
 
 ## Run
 
@@ -27,33 +19,38 @@ pnpm preview      # serve dist/ on http://127.0.0.1:4173
 
 | path | what |
 |---|---|
-| `index.html` | every word and the whole structure |
-| `src/styles/index.css` | tokens, type, layout |
-| `src/lib/backdrop.ts` | the shader backdrop |
-| `src/lib/lift.ts` | the rail: active chapter and the marker |
-| `src/lib/reveal.ts` | the page-load sequence and one reveal per section |
-| `src/lib/sheet.ts` | the document becoming a record |
-| `src/lib/scroll.ts` | smooth scroll and anchor handling |
-| `docs/site-brief.md` | the storyline, content rules and copy |
+| `src/story.ts` | every word on the page, the chapter order, camera stations, founders |
+| `src/scene/CameraRig.tsx` | the spline, dwell curve, damping, parallax, floor-crossing pulses |
+| `src/scene/Column.tsx` | the glass floors, edges, struts, etched plaques |
+| `src/scene/floors/` | one file per floor: fund, deal, company, plant |
+| `src/scene/Sheet.tsx` | the delivery note, its highlights, the particle stream, the record |
+| `src/scene/Effects.tsx` | bloom, depth of field, aberration, grain, vignette |
+| `src/scene/Atmosphere.tsx` | background and fog by depth; writes `--bg` for the DOM |
+| `src/scene/Sky.tsx`, `Ground.tsx`, `GhostColumns.tsx`, `LightShafts.tsx` | the environment around the building |
+| `src/ui/` | nav, elevator panel, chapters, loader, footer |
+| `src/styles/index.css` | tokens and layout |
+| `docs/superpowers/specs/` | the design spec |
 
-## Checks
+## Visual QA
 
-Both scripts drive a locally cached headless Chromium. Set `CHROME_PATH` to use another binary.
+Two headless scripts drive a locally cached Chromium (Playwright's or Puppeteer's; set `CHROME_PATH` to use another).
 
 ```bash
-node scripts/shots.mjs                  # a screenshot per section, desktop
-node scripts/shots.mjs --mobile         # 390×844
-node scripts/shots.mjs --reduce         # prefers-reduced-motion
-node scripts/shots.mjs --og             # rewrites public/og.png from the hero
-node scripts/audit.mjs                  # anchors, rail, focus order, contrast, console
+node scripts/stations.mjs                       # hold the camera at each station, plain materials, no post
+node scripts/stations.mjs --ids fund,sheet      # a subset
+node scripts/stations.mjs --mobile              # 390×844
+node scripts/shots.mjs --q "fx=0&glass=0&snap=1" # ride the real scroll through every chapter
+node scripts/shots.mjs --reduce --q "fx=0&glass=0"
+node scripts/shots.mjs --og                     # writes public/og.png from the surface, full effects (slow)
+node scripts/interactions.mjs                   # elevator, descend button, keyboard order, console errors
 ```
 
-`audit.mjs` is the gate before shipping. It must report no console errors, every anchor landing on its own section with the right rail entry lit, and every text sample above 4.5:1 against both the flat background and the darkest tone the backdrop can paint (3:1 for the large chapter numerals).
+Software rendering is slow with glass and post-processing on, so composition checks use the debug switches. Debug switches on the page itself: `?fx=0`, `?glass=0`, `?snap=1`, `?cam=<chapter id>`.
 
 ## Content rules
 
-Nothing traceable to a client: no figures, sectors, countries, timelines or engagement details. Company facts, founders, advisors and locations are fine. One conversion, the Calendly link, with sharad@aistudio.ae as the fallback.
+Public copy describes the kind of work and the company's own principles, people and places. Nothing traceable to a client appears on the site.
 
 ## Deploy
 
-Static output in `dist/`, about 55 kB gzipped plus two self-hosted fonts. Any static host. The Open Graph image URL in `index.html` assumes `https://www.aistudio.ae`; change it if the domain differs.
+Static output in `dist/`. Any static host. The Open Graph image URL in `index.html` assumes `https://www.aistudio.ae`; change it if the domain differs.
