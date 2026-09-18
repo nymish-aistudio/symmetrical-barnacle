@@ -73,7 +73,7 @@ export function CameraRig({ mobile, reduce }: { mobile: boolean; reduce: boolean
     const y = camera.position.y;
     if (rig.outside < 0.5) for (const f of FLOORS) if ((s.prevY - f.y) * (y - f.y) < 0) rig.pulse = 1;
     s.prevY = y;
-    rig.pulse *= Math.exp(-dt * 3.4);
+    rig.pulse *= Math.exp(-dt * 5.5);
   });
   return null;
 }

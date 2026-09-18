@@ -10,10 +10,10 @@ export function Sky() {
   const mat = useMemo(() => new ShaderMaterial({
     side: BackSide, depthWrite: false, depthTest: false, fog: false,
     uniforms: {
-      uTop: { value: new Color('#1a2438') },
-      uMid: { value: new Color('#0d1119') },
-      uBottom: { value: new Color('#0a0c11') },
-      uWarm: { value: new Color('#1d140d') },
+      uTop: { value: new Color('#22304f') },
+      uMid: { value: new Color('#0c111b') },
+      uBottom: { value: new Color('#090b10') },
+      uWarm: { value: new Color('#22160d') },
       uWarmth: { value: 0 },
     },
     vertexShader: `varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
@@ -27,7 +27,8 @@ export function Sky() {
         vec3 low = mix(uBottom, uWarm, uWarmth);
         c = mix(c, low, smoothstep(-0.05, -0.7, h));
         // a faint horizon band, brighter toward the top of the building
-        c += uTop * 0.28 * exp(-pow((h - 0.08) * 5.5, 2.0));
+        c += uTop * 0.7 * exp(-pow((h - 0.05) * 4.0, 2.0));
+        c += vec3(0.16, 0.12, 0.08) * exp(-pow((h + 0.12) * 7.0, 2.0)) * (0.6 + 0.4 * uWarmth);
         // fine grain so the gradient never bands
         c += (hash(gl_FragCoord.xy) - 0.5) * 0.012;
         gl_FragColor = vec4(c, 1.0);
@@ -39,7 +40,7 @@ export function Sky() {
   });
   return (
     <mesh ref={ref} material={mat} frustumCulled={false} renderOrder={-100}>
-      <sphereGeometry args={[180, 40, 24]} />
+      <sphereGeometry args={[360, 40, 24]} />
     </mesh>
   );
 }

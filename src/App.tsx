@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PerformanceMonitor } from '@react-three/drei';
 import { ACESFilmicToneMapping } from 'three';
@@ -17,7 +17,9 @@ let scrollInit = false;
 export default function App() {
   const [ready, setReady] = useState(false);
   const [frame, setFrame] = useState(false);
-  const [res, setRes] = useState(dpr[1]);
+  // resolution is decided while the loader is up, then locked: post-processing buffers must not resize mid-scroll
+  const onSceneReady = useCallback(() => setTimeout(() => setFrame(true), 80), []);
+  const [res, setRes] = useState(() => Math.min(Math.max(window.devicePixelRatio || 1, dpr[0]), dpr[1]));
 
   useEffect(() => {
     if (scrollInit) return;
@@ -30,8 +32,8 @@ export default function App() {
   useEffect(() => {
     let cancelled = false;
     const go = () => { if (!cancelled) { setReady(true); rig.started = true; } };
-    const fallback = setTimeout(go, 6000);
-    if (frame) document.fonts.ready.then(() => setTimeout(go, 400));
+    const fallback = setTimeout(go, 14000);
+    if (frame) document.fonts.ready.then(() => setTimeout(go, 1400));
     return () => { cancelled = true; clearTimeout(fallback); };
   }, [frame]);
 
@@ -41,13 +43,13 @@ export default function App() {
         <Canvas
           dpr={res}
           gl={{ antialias: false, powerPreference: 'high-performance', alpha: false, stencil: false, depth: true }}
-          camera={{ fov: 42, near: 0.2, far: 400, position: [11, 50, 28] }}
-          onCreated={({ gl }) => { gl.toneMapping = ACESFilmicToneMapping; gl.toneMappingExposure = 1.05; setTimeout(() => setFrame(true), 50); }}
+          camera={{ fov: 42, near: 0.2, far: 520, position: [11, 50, 28] }}
+          onCreated={({ gl }) => { gl.toneMapping = ACESFilmicToneMapping; gl.toneMappingExposure = 1.05; }}
         >
-          {/* trade resolution for frame rate when the machine cannot keep up */}
-          <PerformanceMonitor onDecline={() => setRes(1)} onIncline={() => setRes(dpr[1])} flipflops={2} onFallback={() => setRes(1)} />
+          {/* while the loader hides the canvas, trade resolution for frame rate if the machine cannot keep up */}
+          {!ready && <PerformanceMonitor ms={150} iterations={6} threshold={0.7} bounds={() => [40, 58]} onDecline={() => setRes((r) => Math.max(dpr[0], r - 0.5))} onFallback={() => setRes(dpr[0])} />}
           <Suspense fallback={null}>
-            <Scene mobile={mobile} reduce={reduceMotion} />
+            <Scene mobile={mobile} reduce={reduceMotion} onReady={onSceneReady} />
           </Suspense>
         </Canvas>
       </div>
